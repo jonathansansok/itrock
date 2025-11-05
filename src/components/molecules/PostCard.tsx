@@ -9,7 +9,7 @@ import {
   removeComment,
 } from "@/store/slices/feedSlice";
 import { useState } from "react";
-
+import HeartButton from "@/components/atoms/HeartButton";
 export default function PostCard({ post }: { post: Post }) {
   const d = useDispatch();
   const [text, setText] = useState("");
@@ -56,28 +56,30 @@ export default function PostCard({ post }: { post: Post }) {
           </div>
         </div>
       )}
-  
+
       {/* CAPTION DEBAJO DE LA FOTO (o arriba si no hay foto) */}
       {post.content && (
-        <p className={`${post.imageUrl ? "mt-2" : ""} whitespace-pre-wrap text-sm sm:text-base`}>
+        <p
+          className={`${
+            post.imageUrl ? "mt-2" : ""
+          } whitespace-pre-wrap text-sm sm:text-base`}
+        >
           {post.content}
         </p>
       )}
-  
+
       <div className="mt-2 text-xs sm:text-sm text-gray-500">
         {new Date(post.createdAt).toLocaleString()}
       </div>
-  
+
       <div className="flex items-center gap-2">
-        <button
-          onClick={() => d(toggleLike({ postId: post.id }))}
-          className="rounded-lg border px-3 py-1.5 text-sm"
-        >
-          ❤️ {post.likes}
-        </button>
+        <HeartButton
+          liked={!!post.likedByMe}
+          count={post.likes}
+          onToggle={() => d(toggleLike({ postId: post.id }))}
+        />
       </div>
 
-      {/* Input + botón */}
       <div className="mt-3">
         <form
           onSubmit={(e) => {
