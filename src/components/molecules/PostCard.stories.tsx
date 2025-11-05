@@ -1,4 +1,4 @@
-//social-basic\src\components\molecules\PostCard.stories.tsx
+// src/components/molecules/PostCard.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import PostCard from "./PostCard";
 import type { Post } from "@/types";
@@ -10,9 +10,7 @@ const samplePost: Post = {
   likes: 10,
   likedByMe: false,
   createdAt: new Date().toISOString(),
-  comments: [
-    { id: "c-1", postId: "p-demo", userId: "u2", text: "¡Buenísimo!", createdAt: new Date().toISOString() },
-  ],
+  comments: [{ id: "c-1", postId: "p-demo", userId: "u2", text: "¡Buenísimo!", createdAt: new Date().toISOString() }],
 };
 
 const meta: Meta<typeof PostCard> = {

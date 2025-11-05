@@ -9,39 +9,29 @@ const config: StorybookConfig = {
   framework: { name: "@storybook/react-webpack5", options: {} },
   docs: { autodocs: "tag" },
 
-  // 👇 Tipamos cfg y agregamos alias + regla TS
-  webpackFinal: async (cfg: WebpackConfig) => {
-    cfg.resolve = cfg.resolve || {};
-    cfg.resolve.extensions = [
-      ...(cfg.resolve.extensions || []),
-      ".ts",
-      ".tsx",
-    ];
+  webpackFinal: async (cfg) => {
+    const wb = cfg as WebpackConfig;
 
-    // Alias @ -> src
-    cfg.resolve.alias = {
-      ...(cfg.resolve.alias || {}),
+    wb.resolve = wb.resolve ?? {};
+    wb.resolve.extensions = [...(wb.resolve.extensions ?? []), ".ts", ".tsx"];
+    wb.resolve.alias = {
+      ...(wb.resolve.alias ?? {}),
       "@": path.resolve(__dirname, "../src"),
     };
 
-    cfg.module = cfg.module || { rules: [] };
-    cfg.module.rules = cfg.module.rules || [];
+    wb.module = wb.module ?? { rules: [] };
+    wb.module.rules = [
+      ...(wb.module.rules ?? []),
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: [{ loader: "ts-loader", options: { transpileOnly: true } }],
+      },
+    ];
 
-    cfg.module.rules.push({
-      test: /\.(ts|tsx)$/,
-      exclude: /node_modules/,
-      use: [
-        {
-          loader: require.resolve("ts-loader"),
-          options: { transpileOnly: true },
-        },
-      ],
-    });
-
-    return cfg;
+    return wb;
   },
 
-  // Docgen TS
   typescript: { reactDocgen: "react-docgen-typescript" },
 };
 
