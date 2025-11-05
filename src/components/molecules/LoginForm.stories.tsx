@@ -1,3 +1,4 @@
+//social-basic\src\components\molecules\LoginForm.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import LoginForm from "./LoginForm";
 

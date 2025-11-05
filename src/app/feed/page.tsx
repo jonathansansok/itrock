@@ -1,8 +1,7 @@
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { posts } from "@/lib/mockDb";
-import FeedList from "@/components/organisms/FeedList";
 import ClientComposer from "./ClientComposer";
+import FeedListClient from "./FeedListClient";
 
 export default async function Page() {
   const session = await getServerSession();
@@ -27,11 +26,11 @@ export default async function Page() {
         </form>
       </div>
 
-      {/* Cliente solo donde hace falta interactividad */}
+      {/* Cliente para interacciones */}
       <ClientComposer />
 
-      {/* Lista SSR (mock) */}
-      <FeedList posts={posts} />
+      {/* Cliente que lee Redux y pinta el timeline */}
+      <FeedListClient />
     </main>
   );
 }
