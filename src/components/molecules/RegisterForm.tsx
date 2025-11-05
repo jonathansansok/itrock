@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 export default function RegisterForm() {
   const d = useDispatch();
   const [name, setName] = useState("Ada");
-  const [email, setEmail] = useState("ada@example.com");
+  const [email, setEmail] = useState("tu@example.com");
   const [password, setPassword] = useState("demo");
 
   const onSubmit = async (e: React.FormEvent) => {

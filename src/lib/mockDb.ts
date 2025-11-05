@@ -1,7 +1,7 @@
 import { Post, User } from "@/types";
 
 export const users: User[] = [
-  { id: "u1", name: "Ada Lovelace", email: "ada@example.com", image: "/avatar1.png" },
+  { id: "u1", name: "Ada Lovelace", email: "tu@example.com", image: "/avatar1.png" },
   { id: "u2", name: "Jon", email: "jon@example.com", image: "/avatar2.png" },
 ];
 
