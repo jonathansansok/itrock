@@ -98,12 +98,12 @@ export default function PostCard({ post }: { post: Post }) {
                 : "Iniciá sesión para comentar"
             }
             disabled={!canComment}
-            className="w-full rounded-full bg-neutral-900 border border-neutral-800 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-neutral-600"
+            className="w-full rounded-full bg-black border border-neutral-800 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-neutral-600"
           />
           <button
             type="submit"
             disabled={!canComment || !text.trim()}
-            className="w-full rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 sm:w-auto"
+            className="w-full rounded-full bg-black px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 sm:w-auto"
           >
             Comentar
           </button>
