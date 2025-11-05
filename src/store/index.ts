@@ -1,27 +1,32 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
+} from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+
 import auth from "./slices/authSlice";
 import feed from "./slices/feedSlice";
+import users from "./slices/usersSlice";
 
-// Storage compatible SSR (noop en server, localStorage en client)
+// Storage compatible con SSR (noop en server, localStorage en client)
 const createNoopStorage = () => ({
   getItem(_key: string) { return Promise.resolve(null); },
   setItem(_key: string, value: string) { return Promise.resolve(value); },
   removeItem(_key: string) { return Promise.resolve(); },
 });
-
 const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
 
-const reducer = combineReducers({ auth, feed });
+const reducer = combineReducers({ auth, feed, users });
+
 const persisted = persistReducer(
-  { key: "root", storage, whitelist: ["auth", "feed"] },
+  { key: "root", storage, whitelist: ["auth", "feed", "users"] },
   reducer
 );
 
 export const store = configureStore({
   reducer: persisted,
-  // Ignoramos acciones de redux-persist para el serializableCheck
   middleware: (getDefault) =>
     getDefault({
       serializableCheck: {

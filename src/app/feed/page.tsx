@@ -2,6 +2,9 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { posts } from "@/lib/mockDb";
 import FeedList from "@/components/organisms/FeedList";
+import dynamic from "next/dynamic";
+
+const PostComposer = dynamic(() => import("@/components/molecules/PostComposer"), { ssr: false }); // ✅
 
 export default async function Page() {
   const session = await getServerSession();
@@ -17,6 +20,8 @@ export default async function Page() {
           <button className="rounded-xl border px-3 py-2">Salir</button>
         </form>
       </div>
+
+      <PostComposer />
       <FeedList posts={posts} />
     </main>
   );

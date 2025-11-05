@@ -1,6 +1,6 @@
 // src/types/index.ts
-export interface SessionUser { id: string; name: string; email: string; image?: string }
-export type User = SessionUser; // ✅ sin quejarse
+export interface SessionUser { id: string; name: string; email: string; image?: string | null }
+export type User = SessionUser;
 
 export interface Comment { id: string; postId: string; userId: string; text: string; createdAt: string }
 export interface Post {
