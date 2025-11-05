@@ -1,3 +1,4 @@
+//social-basic\.storybook\tsconfig.json
 {
     "extends": "../tsconfig.json",
     "include": ["../src/**/*", "./**/*"]

@@ -1,3 +1,4 @@
+//social-basic\src\app\api\auth\[...nextauth]\route.ts
 import NextAuth from "next-auth";
 import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";

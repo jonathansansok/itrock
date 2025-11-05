@@ -1,4 +1,3 @@
-// social-basic/src/app/(auth)/login/page.tsx
 import { getServerSession } from "next-auth";
 import LoginForm from "@/components/molecules/LoginForm";
 import Link from "next/link";
