@@ -16,8 +16,8 @@ export default async function Page() {
   }
 
   return (
-    <main className="grid min-h-dvh place-items-center bg-gray-50 text-gray-900">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow">
+    <main className="grid min-h-dvh place-items-center bg-gray-50 text-gray-900 px-3 sm:px-4">
+  <div className="w-full max-w-sm sm:max-w-md rounded-2xl bg-white p-5 sm:p-6 shadow">
         <h1 className="mb-4 text-xl font-semibold text-gray-900">Iniciar sesión</h1>
         <LoginForm />
         <p className="mt-4 text-sm text-gray-700">

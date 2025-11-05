@@ -7,3 +7,9 @@ export interface ToggleLikePayload {
     comment: string;
     userId: string;
   }
+
+  export interface RemoveCommentPayload {
+    postId: string;
+    commentId: string;
+    userId: string; 
+  }

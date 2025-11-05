@@ -26,7 +26,7 @@ export default function PostComposer() {
 
     const post: Post = {
       id: crypto.randomUUID(),
-      userId: currentUser.id,              // ← acá
+      userId: currentUser.id, // ← acá
       content,
       imageUrl: imageDataUrl || undefined,
       likes: 0,
@@ -40,13 +40,18 @@ export default function PostComposer() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="mb-4 rounded-2xl bg-white p-4 shadow space-y-3">
+    <form
+      onSubmit={onSubmit}
+      className="mb-4 rounded-2xl bg-white p-3 sm:p-4 shadow space-y-3"
+    >
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder={isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"}
+        placeholder={
+          isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"
+        }
         disabled={!isAuth}
-        className="w-full rounded-xl border px-3 py-2 text-sm min-h-20 disabled:opacity-60"
+        className="w-full rounded-xl border px-3 py-2 text-sm sm:text-base min-h-24 sm:min-h-28 disabled:opacity-60"
       />
 
       <ImagePicker onImageAction={setImageDataUrl} />
@@ -54,7 +59,7 @@ export default function PostComposer() {
       <div className="flex justify-end relative z-10">
         <button
           disabled={!isAuth}
-          className="rounded-xl bg-black px-3 py-2 text-white disabled:opacity-60"
+          className="w-full sm:w-auto rounded-xl bg-black px-4 py-2 text-white text-sm sm:text-base disabled:opacity-60"
         >
           Publicar
         </button>

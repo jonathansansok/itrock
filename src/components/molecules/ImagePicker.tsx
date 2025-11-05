@@ -87,19 +87,19 @@ export default function ImagePicker({
       </div>
 
       {preview && (
-        <div className="mt-3 z-0">
-        <div className="relative w-full overflow-hidden rounded-xl border bg-gray-50" style={{ aspectRatio: "16 / 9" }}>
-          <Image
-            src={preview}
-            alt="preview"
-            fill
-            sizes="(max-width: 768px) 100vw, 700px"
-            className="object-contain"
-            unoptimized
-          />
-        </div>
-      </div>
-      )}
+  <div className="mt-3 z-0">
+    <div className="relative w-full h-40 sm:h-56 md:h-64 rounded-xl border bg-gray-50 overflow-hidden">
+      <Image
+        src={preview}
+        alt="preview"
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 700px, 800px"
+        className="object-contain"
+        unoptimized
+      />
+    </div>
+  </div>
+)}
       {!preview && (
         <p className="mt-2 text-xs text-gray-500">
           Arrastrá y soltá una imagen aquí, o seleccioná un archivo (hasta{" "}

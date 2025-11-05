@@ -19,18 +19,15 @@ export default async function Page() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl p-6 text-gray-900">
-      <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Feed</h1>
-        <form action="/api/auth/signout" method="post">
-          <button className="rounded-xl border px-3 py-2">Salir</button>
+    <main className="mx-auto w-full max-w-screen-sm md:max-w-screen-md lg:max-w-2xl xl:max-w-3xl px-3 sm:px-4 py-4 text-gray-900">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-lg sm:text-xl font-semibold">Feed</h1>
+        <form action="/api/auth/signout" method="post" className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto rounded-xl border px-3 py-2">Salir</button>
         </form>
       </div>
-
-      {/* Cliente para interacciones */}
+  
       <ClientComposer />
-
-      {/* Cliente que lee Redux y pinta el timeline */}
       <FeedListClient />
     </main>
   );
