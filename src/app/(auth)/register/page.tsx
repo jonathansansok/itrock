@@ -1,4 +1,4 @@
-//social-basic\src\app\(auth)\register\page.tsx
+
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
