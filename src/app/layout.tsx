@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import "sweetalert2/dist/sweetalert2.min.css";
 import SessionProvider from "@/components/providers/SessionProvider";
 import ReduxProvider from "@/components/providers/ReduxProvider";
-import AuthHydrator from "@/components/providers/AuthHydrator"; // ✅
+import AuthHydrator from "@/components/providers/AuthHydrator"; 
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
