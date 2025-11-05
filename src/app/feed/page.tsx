@@ -19,7 +19,7 @@ export default async function Page() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-screen-sm md:max-w-screen-md lg:max-w-2xl xl:max-w-3xl px-3 sm:px-4 py-4 text-gray-900">
+<main className="mx-auto w-full max-w-screen-sm md:max-w-screen-md lg:max-w-2xl xl:max-w-3xl px-3 sm:px-4 py-4">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-lg sm:text-xl font-semibold">Feed</h1>
         <form action="/api/auth/signout" method="post" className="w-full sm:w-auto">

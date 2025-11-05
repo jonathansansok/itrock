@@ -16,7 +16,7 @@ const preview: Preview = {
     (Story) => (
       <SessionProvider>
         <Provider store={store}>
-          <div className="min-h-screen bg-white text-black p-8">
+          <div className="min-h-screen bg-black text-white p-8">
             <Story />
           </div>
         </Provider>

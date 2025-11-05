@@ -13,11 +13,12 @@ export default function HeartButton({ liked, count, onToggle }: Props) {
       aria-pressed={liked}
       aria-label={liked ? "Quitar me gusta" : "Me gusta"}
       className={[
-        "inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm",
-        "transition-[transform,background-color,color,border-color] duration-150",
-        "active:scale-95 select-none",
-        liked ? "border-red-200 bg-red-50 text-red-600" : "hover:bg-gray-50"
-      ].join(" ")}
+          "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm select-none",
+          "transition-[transform,background-color,color,border-color] duration-150 active:scale-95",
+          liked
+            ? "border-red-500/40 bg-red-500/10 text-red-400"
+            : "border-neutral-700 text-neutral-200 hover:bg-neutral-800"
+        ].join(" ")}
     >
       {/* SVG Instagram-like (24px) */}
       <svg

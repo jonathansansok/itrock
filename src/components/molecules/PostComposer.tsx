@@ -1,4 +1,4 @@
-// social-basic/src/components/molecules/PostComposer.tsx
+//social-basic\src\components\molecules\PostComposer.tsx
 "use client";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,14 +19,11 @@ export default function PostComposer() {
     e.preventDefault();
     const content = text.trim();
     if (!content && !imageDataUrl) return;
-    if (!isAuth || !currentUser?.id) {
-      console.log("[PostComposer] no authenticated user");
-      return;
-    }
+    if (!isAuth || !currentUser?.id) return;
 
     const post: Post = {
       id: crypto.randomUUID(),
-      userId: currentUser.id, // ← acá
+      userId: currentUser.id,
       content,
       imageUrl: imageDataUrl || undefined,
       likes: 0,
@@ -40,26 +37,21 @@ export default function PostComposer() {
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="mb-4 rounded-2xl bg-white p-3 sm:p-4 shadow space-y-3"
-    >
+    <form onSubmit={onSubmit} className="mb-4 rounded-2xl border border-neutral-800  p-3 sm:p-4 space-y-3">
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder={
-          isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"
-        }
+        placeholder={isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"}
         disabled={!isAuth}
-        className="w-full rounded-xl border px-3 py-2 text-sm sm:text-base min-h-24 sm:min-h-28 disabled:opacity-60"
+        className="w-full rounded-2xl bg-neutral-800 border border-neutral-700 px-4 py-3 text-sm sm:text-base text-neutral-100 placeholder:text-neutral-500 min-h-24 sm:min-h-28 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-neutral-600"
       />
 
       <ImagePicker onImageAction={setImageDataUrl} />
 
-      <div className="flex justify-end relative z-10">
+      <div className="relative z-10 flex justify-end">
         <button
           disabled={!isAuth}
-          className="w-full sm:w-auto rounded-xl bg-black px-4 py-2 text-white text-sm sm:text-base disabled:opacity-60"
+          className="w-full sm:w-auto rounded-full bg-neutral-800 px-4 py-2 text-sm sm:text-base text-neutral-100 hover:bg-neutral-700 disabled:opacity-60"
         >
           Publicar
         </button>

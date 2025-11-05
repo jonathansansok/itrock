@@ -10,6 +10,7 @@ import {
 } from "@/store/slices/feedSlice";
 import { useState } from "react";
 import HeartButton from "@/components/atoms/HeartButton";
+
 export default function PostCard({ post }: { post: Post }) {
   const d = useDispatch();
   const [text, setText] = useState("");
@@ -27,7 +28,6 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Enter envía; Shift+Enter permitiría salto de línea si fuera textarea
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
@@ -37,12 +37,12 @@ export default function PostCard({ post }: { post: Post }) {
   const canComment = isAuth && !!currentUser?.id;
 
   return (
-    <article className="rounded-2xl bg-white p-3 sm:p-4 shadow">
-      {/* IMAGEN PRIMERO */}
+    <article className="rounded-2xl border border-neutral-800 bg-black p-3 sm:p-4">
+      {/* Imagen primero */}
       {post.imageUrl && (
         <div className="mb-2">
           <div
-            className="relative w-full max-h-112 overflow-hidden"
+            className="relative w-full max-h-112 overflow-hidden bg-black"
             style={{ aspectRatio: "16 / 9" }}
           >
             <Image
@@ -57,22 +57,21 @@ export default function PostCard({ post }: { post: Post }) {
         </div>
       )}
 
-      {/* CAPTION DEBAJO DE LA FOTO (o arriba si no hay foto) */}
       {post.content && (
         <p
           className={`${
             post.imageUrl ? "mt-2" : ""
-          } whitespace-pre-wrap text-sm sm:text-base`}
+          } whitespace-pre-wrap text-sm sm:text-base text-neutral-200`}
         >
           {post.content}
         </p>
       )}
 
-      <div className="mt-2 text-xs sm:text-sm text-gray-500">
+      <div className="mt-2 text-xs sm:text-sm text-neutral-400">
         {new Date(post.createdAt).toLocaleString()}
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="mt-2 flex items-center gap-2">
         <HeartButton
           liked={!!post.likedByMe}
           count={post.likes}
@@ -80,13 +79,14 @@ export default function PostCard({ post }: { post: Post }) {
         />
       </div>
 
+      {/* Input de comentario + botón */}
       <div className="mt-3">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(e);
           }}
-          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
+          className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center"
         >
           <input
             value={text}
@@ -94,24 +94,23 @@ export default function PostCard({ post }: { post: Post }) {
             onKeyDown={onKeyDown}
             placeholder={
               canComment
-                ? "Escribe un comentario…"
+                ? "Añade un comentario…"
                 : "Iniciá sesión para comentar"
             }
             disabled={!canComment}
-            className="w-full rounded-xl border px-3 py-2 text-sm disabled:opacity-60"
+            className="w-full rounded-full bg-neutral-900 border border-neutral-800 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-neutral-600"
           />
           <button
             type="submit"
             disabled={!canComment || !text.trim()}
-            className="w-full sm:w-auto rounded-xl bg-black px-4 py-2 text-white text-sm disabled:opacity-60"
+            className="w-full rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 sm:w-auto"
           >
             Comentar
           </button>
         </form>
       </div>
 
-      {/* Lista de comentarios */}
-      <ul className="mt-3 space-y-1 text-sm">
+      <ul className="mt-3 space-y-1 text-sm text-neutral-200">
         {post.comments.map((c) => {
           const canDelete = currentUser?.id === c.userId;
           return (
@@ -132,7 +131,7 @@ export default function PostCard({ post }: { post: Post }) {
                       })
                     )
                   }
-                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border text-xs leading-none hover:bg-gray-50"
+                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border border-neutral-700 text-xs leading-none hover:bg-neutral-800"
                 >
                   ×
                 </button>
