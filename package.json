@@ -18,7 +18,7 @@
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-interactions": "^8.6.14",
-    "@storybook/react": "^10.0.5",
+    "@storybook/react-webpack5": "^8.6.14",
     "@storybook/test": "^8.6.14",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -26,12 +26,12 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
+    "storybook": "^8.6.14",
     "tailwindcss": "^4",
+    "ts-loader": "^9.5.1",
     "typescript": "^5"
   },
   "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
+    "extends": ["plugin:storybook/recommended"]
   }
 }
