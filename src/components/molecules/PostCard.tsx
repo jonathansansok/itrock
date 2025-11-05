@@ -1,8 +1,8 @@
-// social-basic/src/components/molecules/PostCard.tsx
 "use client";
 import Image from "next/image";
 import { Post } from "@/interfaces";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/store";
 import { toggleLike, addComment } from "@/store/slices/feedSlice";
 import { useState } from "react";
 
@@ -10,14 +10,31 @@ export default function PostCard({ post }: { post: Post }) {
   const d = useDispatch();
   const [text, setText] = useState("");
 
+  const currentUser = useSelector((s: RootState) => s.auth.user);
+  const isAuth = useSelector((s: RootState) => s.auth.isAuthenticated);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const comment = text.trim();
+    if (!comment) return;
+    if (!isAuth || !currentUser?.id) {
+      console.log("[PostCard] no authenticated user");
+      return;
+    }
+    d(addComment({ postId: post.id, comment, userId: currentUser.id }));
+    setText("");
+  };
+
   return (
     <article className="rounded-2xl bg-white p-4 shadow">
       <p className="mb-2 whitespace-pre-wrap">{post.content}</p>
 
       {post.imageUrl && (
         <div className="mb-2">
-          {/* Wrapper con relación de aspecto + límite de altura */}
-          <div className="relative w-full max-h-112 overflow-hidden rounded-xl border bg-gray-50" style={{ aspectRatio: "16 / 9" }}>
+          <div
+            className="relative w-full max-h-112 overflow-hidden rounded-xl border bg-gray-50"
+            style={{ aspectRatio: "16 / 9" }}
+          >
             <Image
               src={post.imageUrl}
               alt="post"
@@ -25,7 +42,6 @@ export default function PostCard({ post }: { post: Post }) {
               sizes="(max-width: 768px) 100vw, 700px"
               className="object-contain"
               unoptimized
-              priority={false}
             />
           </div>
         </div>
@@ -45,19 +61,13 @@ export default function PostCard({ post }: { post: Post }) {
       </div>
 
       <div className="mt-3">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!text) return;
-            d(addComment({ postId: post.id, comment: text, userId: "u2" }));
-            setText("");
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Escribe un comentario…"
-            className="w-full rounded-xl border px-3 py-2 text-sm"
+            placeholder={isAuth ? "Escribe un comentario…" : "Iniciá sesión para comentar"}
+            disabled={!isAuth}
+            className="w-full rounded-xl border px-3 py-2 text-sm disabled:opacity-60"
           />
         </form>
       </div>
