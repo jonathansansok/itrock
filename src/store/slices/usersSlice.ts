@@ -1,6 +1,7 @@
+// social-basic/src/store/slices/usersSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { LocalUser } from "@/interfaces";
 
-export interface LocalUser { id: string; name: string; email: string }
 interface UsersState { items: LocalUser[] }
 
 const initial: UsersState = { items: [] };
@@ -10,7 +11,8 @@ const slice = createSlice({
   initialState: initial,
   reducers: {
     addUser(state, action: PayloadAction<LocalUser>) {
-      const exists = state.items.some(u => u.email.toLowerCase() === action.payload.email.toLowerCase());
+      const email = action.payload.email.toLowerCase();
+      const exists = state.items.some(u => u.email.toLowerCase() === email);
       if (!exists) {
         console.log("[usersSlice.addUser] adding", action.payload.email);
         state.items.push(action.payload);
