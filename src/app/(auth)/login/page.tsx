@@ -1,4 +1,5 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import LoginForm from "@/components/molecules/LoginForm";
 import InstagramGlyph from "@/components/brand/InstagramGlyph";
@@ -6,22 +7,26 @@ import InstagramWordmark from "@/components/brand/InstagramWordmark";
 import InstaSansoWordmark from "@/components/brand/InstaSansoWordmark";
 import LoginCallbackGuard from "@/components/guards/LoginCallbackGuard";
 import LoggedInBanner from "@/components/molecules/LoggedInBanner";
+import type { Viewport } from "next";
+
+export const viewport: Viewport = { themeColor: "#000000" };
+
 export default async function Page() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (session) {
     return <LoggedInBanner dest="/feed" />;
   }
 
   return (
     <main className="relative min-h-dvh bg-black text-neutral-100">
-      <LoginCallbackGuard /> 
+      <LoginCallbackGuard />
 
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(600px_300px_at_20%_10%,rgba(236,72,153,0.20),transparent_60%),radial-gradient(500px_250px_at_80%_0%,rgba(139,92,246,0.18),transparent_60%)]"
       />
 
-      {/* Header brand */}
+
       <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5">
         <div className="flex items-center gap-3">
           <InstagramGlyph size={34} yOffset={-3} />
@@ -40,9 +45,8 @@ export default async function Page() {
         </div>
       </header>
 
-
       <section className="mx-auto grid w-full max-w-[980px] grid-cols-1 px-4 pb-12 lg:grid-cols-2 lg:gap-8">
-
+        {/* Lado izquierdo: claim */}
         <div className="hidden lg:flex flex-col justify-center">
           <h1 className="text-4xl font-semibold leading-tight">
             Mirá los momentos cotidianos de{" "}
@@ -53,8 +57,9 @@ export default async function Page() {
           </p>
         </div>
 
+        {/* Card login */}
         <div className="flex min-h-[60vh] items-center">
-          <div className="w-full max-w-sm sm:max-w-md rounded-2xl border border-neutral-800/80 bg-black/60 p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur-sm">
+          <div className="w-full max-w-sm sm:max-w-md rounded-2xl bg-black/60 p-6 backdrop-blur-sm">
             <div className="mb-5 flex items-center gap-2 lg:hidden">
               <InstagramGlyph size={28} yOffset={-1} />
               <InstagramWordmark width={96} />

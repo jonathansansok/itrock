@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "sweetalert2/dist/sweetalert2.min.css";
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
     ],
     apple: "/icons/instagram-180.png",
   },
-  themeColor: "#000000",
 };
+export const viewport = { themeColor: "#000000" } satisfies Viewport;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
