@@ -174,7 +174,7 @@ PostCard
 
 Comando:
 
-pnpm storybook
+npm storybook
 
 🚀 Deploy
 
@@ -200,14 +200,14 @@ http://localhost:3000/api/auth/callback/google
 
 🧪 Scripts
 Acción	Comando 
-Instalar dependencias	pnpm install
-Ejecutar en dev	pnpm dev
-Build producción	pnpm build && pnpm start
-Lint	pnpm lint
-Storybook	pnpm storybook
+Instalar dependencias	npm install
+Ejecutar en dev	npm dev
+Build producción	npm build && npm start
+Lint	npm lint
+Storybook	npm storybook
 💬 Uso rápido
 
-1️⃣ pnpm dev
+1️⃣ npm dev
 2️⃣ Ir a http://localhost:3000
 
 3️⃣ Registrarse o loguearse (mock)
