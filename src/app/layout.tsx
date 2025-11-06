@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Social Basic",
-  description: "Challenge",
+  title: "Instagram by J. Sansó",
+  description: "Challenge IT-ROCK",
 };
 
 export default function RootLayout({
