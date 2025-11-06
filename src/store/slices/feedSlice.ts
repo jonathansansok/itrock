@@ -1,40 +1,62 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { FeedState, Post } from "@/interfaces";
-import type { ToggleLikePayload, AddCommentPayload, RemoveCommentPayload } from "@/interfaces";
+import type { Post, Comment } from "@/interfaces"; 
 
-const initial: FeedState = { posts: [], loading: false, error: null };
+interface FeedState {
+  posts: Post[];
+}
 
-const slice = createSlice({
+const initialState: FeedState = { posts: [] };
+
+const feedSlice = createSlice({
   name: "feed",
-  initialState: initial,
+  initialState,
   reducers: {
-    hydrateFeed(state, action: PayloadAction<Post[]>) { state.posts = action.payload; },
-    addPost(state, action: PayloadAction<Post>) { state.posts.unshift(action.payload); },
-    toggleLike(state, action: PayloadAction<ToggleLikePayload>) {
-      const p = state.posts.find(x => x.id === action.payload.postId);
-      if (p) { p.likedByMe = !p.likedByMe; p.likes += p.likedByMe ? 1 : -1; }
+    hydrateFeed: (state, action: PayloadAction<Post[]>) => {
+      if (state.posts.length === 0) state.posts = action.payload;
     },
-    addComment(state, action: PayloadAction<AddCommentPayload>) {
-      const p = state.posts.find(x => x.id === action.payload.postId);
-      if (p) {
-        p.comments.unshift({
-          id: crypto.randomUUID(),
-          postId: p.id,
-          userId: action.payload.userId,
-          text: action.payload.comment,
-          createdAt: new Date().toISOString(),
-        });
+
+    addPost: (state, action: PayloadAction<Post>) => {
+      state.posts.unshift(action.payload);
+    },
+
+    toggleLike: (state, action: PayloadAction<{ postId: string }>) => {
+      const post = state.posts.find(p => p.id === action.payload.postId);
+      if (post) {
+        post.likedByMe = !post.likedByMe;
+        post.likes += post.likedByMe ? 1 : -1;
       }
     },
-    removeComment(state, action: PayloadAction<RemoveCommentPayload>) {
+
+    addComment: (
+      state,
+      action: PayloadAction<{ postId: string; userId: string; comment: string }>
+    ) => {
+      const { postId, userId, comment } = action.payload;
+      const post = state.posts.find(p => p.id === postId);
+      if (post) {
+        const newComment: Comment = {
+          id: crypto.randomUUID(),
+          postId,               
+          userId,
+          text: comment,
+          createdAt: new Date().toISOString(), 
+        };
+        post.comments.unshift(newComment);
+      }
+    },
+
+    removeComment: (
+      state,
+      action: PayloadAction<{ postId: string; commentId: string; userId: string }>
+    ) => {
       const { postId, commentId, userId } = action.payload;
-      const p = state.posts.find(x => x.id === postId);
-      if (!p) return;
-      const idx = p.comments.findIndex(c => c.id === commentId && c.userId === userId);
-      if (idx !== -1) p.comments.splice(idx, 1);
+      const post = state.posts.find(p => p.id === postId);
+      if (post) {
+        post.comments = post.comments.filter(c => !(c.id === commentId && c.userId === userId));
+      }
     },
   },
 });
 
-export const { hydrateFeed, addPost, toggleLike, addComment, removeComment } = slice.actions;
-export default slice.reducer;
+export const { hydrateFeed, addPost, toggleLike, addComment, removeComment } = feedSlice.actions;
+export default feedSlice.reducer;

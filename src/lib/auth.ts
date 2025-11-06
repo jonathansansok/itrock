@@ -1,11 +1,9 @@
-// src/lib/auth.ts
 import type { NextAuthOptions, Session, User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 type JWTWithUID = JWT & { uid?: string };
-// 👇 tipo auxiliar SOLO para el callback
 type SessionUserWithId = Session["user"] & { id?: string };
 
 export const authOptions: NextAuthOptions = {
@@ -25,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         const email = credentials?.email?.trim();
         const pass = credentials?.password?.trim();
         if (!email || !pass || pass.length < 3) return null;
-        return { id: email, name: email, email }; // demo
+        return { id: email, name: email, email };
       },
     }),
   ],
@@ -44,7 +42,6 @@ export const authOptions: NextAuthOptions = {
     ): Promise<Session> {
       const t = token as JWTWithUID;
       if (t.uid) {
-        // 👇 sin any, y sin romper el tipo base
         (session.user as SessionUserWithId).id = t.uid;
       }
       return session;

@@ -9,11 +9,11 @@ export const posts: Post[] = [
   {
     id: "p1",
     userId: "u1",
-    content: "Hola mundo desde Next.js 15 🚀",
+    content: "Comentario bien Mock 🚀",
     likes: 2,
     createdAt: new Date().toISOString(),
     comments: [
-      { id: "c1", postId: "p1", userId: "u2", text: "¡Bien ahí!", createdAt: new Date().toISOString() },
+      { id: "c1", postId: "p1", userId: "u2", text: "Bien!", createdAt: new Date().toISOString() },
     ],
   },
 ];

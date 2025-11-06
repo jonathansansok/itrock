@@ -21,7 +21,7 @@ const storage = typeof window !== "undefined" ? createWebStorage("local") : crea
 const reducer = combineReducers({ auth, feed, users });
 
 const persisted = persistReducer(
-  { key: "root", storage, whitelist: ["auth", "feed", "users"] },
+  { key: "root", storage, whitelist: ["auth", "users", "feed"] },
   reducer
 );
 
