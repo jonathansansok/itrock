@@ -1,3 +1,4 @@
+//social-basic\src\lib\mockDb.ts
 import { Post, User } from "@/types";
 
 export const users: User[] = [

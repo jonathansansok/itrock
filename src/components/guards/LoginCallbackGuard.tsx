@@ -10,7 +10,6 @@ export default function LoginCallbackGuard() {
   useEffect(() => {
     const err = params.get("error");
     if (err === "Callback") {
-      // SweetAlert2 on demand: evita problemas de SSR
       import("sweetalert2").then(({ default: Swal }) => {
         Swal.fire({
           icon: "info",
@@ -24,7 +23,6 @@ export default function LoginCallbackGuard() {
         });
       });
 
-      // Limpia la URL a /login (sin query) manteniéndote en la misma page
       router.replace("/login");
     }
   }, [params, router]);
