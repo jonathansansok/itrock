@@ -11,7 +11,7 @@ import auth from "./slices/authSlice";
 import feed from "./slices/feedSlice";
 import users from "./slices/usersSlice";
 
-// Storage compatible con SSR (noop en server, localStorage en client)
+
 const createNoopStorage = () => ({
   getItem(_key: string) { return Promise.resolve(null); },
   setItem(_key: string, value: string) { return Promise.resolve(value); },
