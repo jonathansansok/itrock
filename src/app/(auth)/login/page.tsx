@@ -23,7 +23,6 @@ export default async function Page() {
 
   return (
     <main className="min-h-dvh bg-black text-neutral-100">
-
       <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5">
         <div className="flex items-center gap-3">
           <InstagramGlyph size={34} yOffset={-3} />
@@ -71,11 +70,12 @@ export default async function Page() {
             <h2 className="mb-4 text-xl font-semibold">Iniciar sesión</h2>
             <LoginForm />
 
-            <p className="mt-4 text-sm text-neutral-300">
+            <p className="mt-4 text-sm text-neutral-400">
               ¿No tenés cuenta?{" "}
               <a
                 href="/register"
-                className="text-blue-400 underline hover:text-blue-300"
+                className="font-medium bg-clip-text text-transparent bg-linear-to-r from-pink-500 to-violet-500 
+             hover:from-pink-400 hover:to-violet-400 transition underline underline-offset-4 decoration-transparent hover:decoration-neutral-500"
               >
                 Registrate
               </a>
