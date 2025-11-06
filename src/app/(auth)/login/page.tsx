@@ -27,7 +27,7 @@ export default async function Page() {
       />
 
 
-      <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5">
+      <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5 hidden lg:flex">
         <div className="flex items-center gap-3">
           <InstagramGlyph size={34} yOffset={-3} />
           <InstagramWordmark width={110} />
