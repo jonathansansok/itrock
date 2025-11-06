@@ -1,3 +1,4 @@
+//social-basic\src\app\(auth)\register\page.tsx
 "use client";
 
 import { useSession } from "next-auth/react";
