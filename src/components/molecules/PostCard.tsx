@@ -3,11 +3,7 @@ import Image from "next/image";
 import { Post } from "@/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
-import {
-  toggleLike,
-  addComment,
-  removeComment,
-} from "@/store/slices/feedSlice";
+import { toggleLike, addComment, removeComment } from "@/store/slices/feedSlice";
 import { useState } from "react";
 import HeartButton from "@/components/atoms/HeartButton";
 
@@ -39,17 +35,13 @@ export default function PostCard({ post }: { post: Post }) {
   return (
     <article
       className={[
-        "rounded-2xl border border-neutral-800/80 bg-black/60 backdrop-blur-sm",
-        "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)]",
-        "p-3 sm:p-4",
+        "rounded-2xl bg-black/50 backdrop-blur-sm",
+        "p-3 sm:p-4"
       ].join(" ")}
     >
       {post.imageUrl && (
         <div className="mb-3">
-          <div
-            className="relative w-full overflow-hidden rounded-xl bg-black"
-            style={{ aspectRatio: "1 / 1" }}
-          >
+          <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ aspectRatio: "1 / 1" }}>
             <Image
               src={post.imageUrl}
               alt="post"
@@ -62,19 +54,16 @@ export default function PostCard({ post }: { post: Post }) {
         </div>
       )}
 
-      {/* caption */}
       {post.content && (
         <p className="whitespace-pre-wrap text-[15px] leading-6 text-neutral-100">
           {post.content}
         </p>
       )}
 
-      {/* timestamp */}
       <div className="mt-1 text-xs text-neutral-400">
         {new Date(post.createdAt).toLocaleString()}
       </div>
 
-      {/* acciones */}
       <div className="mt-2 flex items-center gap-3">
         <HeartButton
           liked={!!post.likedByMe}
@@ -83,7 +72,6 @@ export default function PostCard({ post }: { post: Post }) {
         />
       </div>
 
-      {/* comentar */}
       <div className="mt-3">
         <form
           onSubmit={(e) => {
@@ -96,25 +84,22 @@ export default function PostCard({ post }: { post: Post }) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder={
-              canComment
-                ? "Añade un comentario…"
-                : "Iniciá sesión para comentar"
-            }
+            placeholder={canComment ? "Añade un comentario…" : "Iniciá sesión para comentar"}
             disabled={!canComment}
-            className="w-full rounded-full bg-black/60 border border-neutral-800 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:border-neutral-700"
+            className="w-full rounded-full bg-neutral-900/60 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500
+                       disabled:opacity-60 focus:outline-none focus:ring-0"
           />
           <button
             type="submit"
             disabled={!canComment || !text.trim()}
-            className="w-full sm:w-auto rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 active:scale-95 transition"
+            className="w-full sm:w-auto rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100
+                       hover:bg-neutral-800 disabled:opacity-60 active:scale-95 transition"
           >
             Comentar
           </button>
         </form>
       </div>
 
-      {/* comentarios */}
       <ul className="mt-3 space-y-1.5 text-sm text-neutral-200">
         {post.comments.map((c) => {
           const canDelete = currentUser?.id === c.userId;
@@ -129,15 +114,10 @@ export default function PostCard({ post }: { post: Post }) {
                   aria-label="Eliminar comentario"
                   title="Eliminar comentario"
                   onClick={() =>
-                    d(
-                      removeComment({
-                        postId: post.id,
-                        commentId: c.id,
-                        userId: c.userId,
-                      })
-                    )
+                    d(removeComment({ postId: post.id, commentId: c.id, userId: c.userId }))
                   }
-                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border border-neutral-800 text-xs leading-none hover:bg-neutral-900 active:scale-95 transition"
+                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md
+                             hover:bg-neutral-900 active:scale-95 transition"
                 >
                   ×
                 </button>
