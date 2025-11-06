@@ -18,7 +18,6 @@ export default function LogoutButton() {
       confirmButtonText: "Sí, cerrar",
       cancelButtonText: "Cancelar",
       reverseButtons: true,
-      // dark theme
       background: "#111",
       color: "#fff",
       confirmButtonColor: "#0ea5e9",

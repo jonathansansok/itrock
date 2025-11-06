@@ -49,7 +49,7 @@ export default function PostComposer() {
         className="w-full rounded-2xl bg-black border border-neutral-800 px-4 py-3 text-sm sm:text-base text-white placeholder:text-neutral-400 min-h-24 sm:min-h-28 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:border-neutral-700"
       />
 
-      <ImagePicker onImageAction={setImageDataUrl} />
+<ImagePicker value={imageDataUrl} onImageAction={setImageDataUrl} />
 
       <div className="relative z-10 flex justify-end">
         <button

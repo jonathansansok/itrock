@@ -43,3 +43,10 @@ body {
   background: rgba(255,255,255,0.16);
   color: #fff;
 }
+
+.brand-gradient {
+  background: linear-gradient(135deg, #FDD074 0%, #F77F34 25%, #DD326E 50%, #D82B7E 75%, #A432B1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

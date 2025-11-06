@@ -1,4 +1,4 @@
-// .storybook/main.ts
+
 import type { StorybookConfig } from "@storybook/react-webpack5";
 import type { Configuration as WebpackConfig } from "webpack";
 import path from "path";

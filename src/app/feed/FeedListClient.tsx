@@ -1,4 +1,4 @@
-//social-basic\src\app\feed\FeedListClient.tsx
+
 "use client";
 
 import { useSelector } from "react-redux";
@@ -8,18 +8,16 @@ import PostCard from "@/components/molecules/PostCard";
 export default function FeedListClient() {
   const posts = useSelector((s: RootState) => s.feed.posts);
 
-  console.log("[FeedListClient] posts en Redux:", posts.length);
-
   if (!posts?.length) {
     return (
-      <div className="mt-6 rounded-xl border bg-white p-6 text-sm text-gray-700">
-        No hay publicaciones aún. ¡Sé el primero en publicar!
+      <div className="mt-6 rounded-2xl border border-neutral-800/80 bg-black/60 backdrop-blur-sm p-6 text-sm text-neutral-300">
+        No hay publicaciones aún. <span className="text-neutral-100">¡Sé el primero en publicar!</span>
       </div>
     );
   }
 
   return (
-    <div className="mt-4 space-y-4">
+    <div className="mt-6 space-y-6">
       {posts.map((p) => (
         <PostCard key={p.id} post={p} />
       ))}

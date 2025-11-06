@@ -1,4 +1,3 @@
-// social-basic\src\lib\image.ts
 export const readFileAsDataURL = (file: File): Promise<string> =>
     new Promise((res, rej) => {
       const fr = new FileReader();

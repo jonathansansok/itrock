@@ -1,4 +1,3 @@
-// social-basic/src/store/slices/usersSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { LocalUser } from "@/interfaces";
 

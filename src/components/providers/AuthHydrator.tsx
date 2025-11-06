@@ -1,4 +1,4 @@
-//social-basic\src\components\providers\AuthHydrator.tsx
+
 "use client";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -14,7 +14,7 @@ export default function AuthHydrator() {
     console.log("[AuthHydrator] status:", status, "session.user:", session?.user);
     if (status === "authenticated" && session?.user?.email) {
       const u: SessionUser = {
-        id: session.user.email, // usamos email como id estable
+        id: session.user.email, 
         name: session.user.name || "",
         email: session.user.email,
         image: session.user.image ?? null,

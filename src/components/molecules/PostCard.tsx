@@ -1,4 +1,3 @@
-//social-basic\src\components\molecules\PostCard.tsx
 "use client";
 import Image from "next/image";
 import { Post } from "@/interfaces";
@@ -38,41 +37,45 @@ export default function PostCard({ post }: { post: Post }) {
   const canComment = isAuth && !!currentUser?.id;
 
   return (
-    <article className="rounded-2xl border border-neutral-800 bg-black p-3 sm:p-4">
-      {/* Imagen primero */}
+    <article
+      className={[
+        "rounded-2xl border border-neutral-800/80 bg-black/60 backdrop-blur-sm",
+        "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)]",
+        "p-3 sm:p-4",
+      ].join(" ")}
+    >
       {post.imageUrl && (
-        <div className="mb-2">
+        <div className="mb-3">
           <div
-            className="relative w-full max-h-112 overflow-hidden bg-black"
-            style={{ aspectRatio: "16 / 9" }}
+            className="relative w-full overflow-hidden rounded-xl bg-black"
+            style={{ aspectRatio: "1 / 1" }}
           >
             <Image
               src={post.imageUrl}
               alt="post"
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 700px, 800px"
-              className="object-contain"
+              className="object-cover"
               unoptimized
             />
           </div>
         </div>
       )}
 
+      {/* caption */}
       {post.content && (
-        <p
-          className={`${
-            post.imageUrl ? "mt-2" : ""
-          } whitespace-pre-wrap text-sm sm:text-base text-neutral-200`}
-        >
+        <p className="whitespace-pre-wrap text-[15px] leading-6 text-neutral-100">
           {post.content}
         </p>
       )}
 
-      <div className="mt-2 text-xs sm:text-sm text-neutral-400">
+      {/* timestamp */}
+      <div className="mt-1 text-xs text-neutral-400">
         {new Date(post.createdAt).toLocaleString()}
       </div>
 
-      <div className="mt-2 flex items-center gap-2">
+      {/* acciones */}
+      <div className="mt-2 flex items-center gap-3">
         <HeartButton
           liked={!!post.likedByMe}
           count={post.likes}
@@ -80,7 +83,7 @@ export default function PostCard({ post }: { post: Post }) {
         />
       </div>
 
-      {/* Input de comentario + botón */}
+      {/* comentar */}
       <div className="mt-3">
         <form
           onSubmit={(e) => {
@@ -99,25 +102,27 @@ export default function PostCard({ post }: { post: Post }) {
                 : "Iniciá sesión para comentar"
             }
             disabled={!canComment}
-            className="w-full rounded-full bg-black border border-neutral-800 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-neutral-600"
+            className="w-full rounded-full bg-black/60 border border-neutral-800 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:border-neutral-700"
           />
           <button
             type="submit"
             disabled={!canComment || !text.trim()}
-            className="w-full rounded-full bg-black px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 sm:w-auto"
+            className="w-full sm:w-auto rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 active:scale-95 transition"
           >
             Comentar
           </button>
         </form>
       </div>
 
-      <ul className="mt-3 space-y-1 text-sm text-neutral-200">
+      {/* comentarios */}
+      <ul className="mt-3 space-y-1.5 text-sm text-neutral-200">
         {post.comments.map((c) => {
           const canDelete = currentUser?.id === c.userId;
           return (
             <li key={c.id} className="flex items-start justify-between gap-2">
-              <span className="wrap-break-word break-all">
-                <b>{c.userId}</b>: {c.text}
+              <span className="wrap-break-words">
+                <b className="text-neutral-100">{c.userId}</b>{" "}
+                <span className="text-neutral-300">— {c.text}</span>
               </span>
               {canDelete && (
                 <button
@@ -132,7 +137,7 @@ export default function PostCard({ post }: { post: Post }) {
                       })
                     )
                   }
-                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border border-neutral-700 text-xs leading-none hover:bg-neutral-800"
+                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md border border-neutral-800 text-xs leading-none hover:bg-neutral-900 active:scale-95 transition"
                 >
                   ×
                 </button>
