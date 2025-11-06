@@ -1,9 +1,9 @@
 Social Basic — Challenge Técnico Next.js 15 + Tailwind CSS 4 + Redux
 
 Desarrollador: Jonathan Sansó
-Repositorio: https://github.com/jonathansansok/social-basic
+Repositorio: https://github.com/jonathansansok/itrock.git
 
-Deploy: (ejemplo) https://social-basic.vercel.app
+Deploy: https://itrock-jonathan-sanso.vercel.app/
 
 🧭 Descripción general
 
@@ -190,11 +190,10 @@ Configuración de entorno en Settings > Environment Variables (NextAuth + Google
 Archivo .env.local:
 
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=tu_secret_seguro
+NEXTAUTH_SECRET=pon_un_secret_seguro
 
-GOOGLE_CLIENT_ID=tu_client_id
-GOOGLE_CLIENT_SECRET=tu_client_secret
-
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=yyy
 
 Callback URL de Google:
 http://localhost:3000/api/auth/callback/google
