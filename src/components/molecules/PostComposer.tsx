@@ -31,7 +31,9 @@ export default function PostComposer() {
     const content = text.trim();
     if (!content && !imageDataUrl) return;
     if (!isAuth || !currentUser?.id) return;
-
+  
+    const authorName = currentUser?.name || currentUser?.email || "Desconocido";
+  
     const post: Post = {
       id: crypto.randomUUID(),
       userId: currentUser.id,
@@ -40,13 +42,15 @@ export default function PostComposer() {
       likes: 0,
       createdAt: new Date().toISOString(),
       comments: [],
+      authorName,
     };
-
+  
     d(addPost(post));
     setText("");
     setImageDataUrl(null);
     if (fileRef.current) fileRef.current.value = "";
   };
+  
 
   return (
     <form

@@ -25,5 +25,6 @@ export interface SessionUser {
     likedByMe?: boolean;
     createdAt: string;
     comments: Comment[];
+    authorName?: string; 
   }
   

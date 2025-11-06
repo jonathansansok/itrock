@@ -23,7 +23,6 @@ export default function AppHeader() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* placeholder de búsqueda (no funcional por ahora) */}
           <div className="hidden sm:flex items-center rounded-lg border border-neutral-800 bg-black/50 px-3 py-1.5">
             <input
               placeholder="Buscar"

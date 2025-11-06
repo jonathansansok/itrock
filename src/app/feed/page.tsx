@@ -13,7 +13,6 @@ export default async function Page() {
   if (!session) redirect("/login");
 
   const initialPosts = await getInitialPosts();
-
   return (
     <>
       <AppHeader />

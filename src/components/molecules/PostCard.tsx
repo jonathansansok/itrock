@@ -14,9 +14,10 @@ import HeartButton from "@/components/atoms/HeartButton";
 export default function PostCard({ post }: { post: Post }) {
   const d = useDispatch();
   const [text, setText] = useState("");
-
   const currentUser = useSelector((s: RootState) => s.auth.user);
   const isAuth = useSelector((s: RootState) => s.auth.isAuthenticated);
+
+  const author = post.authorName || "Desconocido";
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -37,12 +38,15 @@ export default function PostCard({ post }: { post: Post }) {
   const canComment = isAuth && !!currentUser?.id;
 
   return (
-    <article
-      className={[
-        "rounded-2xl bg-black/50 backdrop-blur-sm",
-        "p-3 sm:p-4",
-      ].join(" ")}
-    >
+    <article className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4">
+      <header className="mb-3 flex items-center justify-between">
+        <div>
+          <div className="text-sm font-semibold text-neutral-100">
+            Public. by {author}
+          </div>
+        </div>
+      </header>
+
       {post.imageUrl && (
         <div className="mb-3">
           <div
@@ -66,11 +70,9 @@ export default function PostCard({ post }: { post: Post }) {
           {post.content}
         </p>
       )}
-
-      <div className="mt-1 text-xs text-neutral-400">
+      <div className="text-xs text-neutral-400">
         {new Date(post.createdAt).toLocaleString()}
       </div>
-
       <div className="mt-2 flex items-center gap-3">
         <HeartButton
           liked={!!post.likedByMe}
