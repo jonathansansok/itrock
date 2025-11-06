@@ -2,6 +2,7 @@ import type { NextAuthOptions, Session, User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { isValidEmail, isStrongPassword } from "./validators";
 
 type JWTWithUID = JWT & { uid?: string };
 type SessionUserWithId = Session["user"] & { id?: string };
@@ -20,9 +21,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = credentials?.email?.trim();
-        const pass = credentials?.password?.trim();
-        if (!email || !pass || pass.length < 3) return null;
+        const email = credentials?.email?.trim() ?? "";
+        const pass = credentials?.password ?? "";
+        if (!isValidEmail(email)) return null;
+        if (!isStrongPassword(pass)) return null;
         return { id: email, name: email, email };
       },
     }),
@@ -31,19 +33,13 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
 
   callbacks: {
-    async jwt(
-      { token, user }: { token: JWT; user?: User }
-    ): Promise<JWT> {
+    async jwt({ token, user }: { token: JWT; user?: User }): Promise<JWT> {
       if (user?.id) (token as JWTWithUID).uid = user.id;
       return token;
     },
-    async session(
-      { session, token }: { session: Session; token: JWT }
-    ): Promise<Session> {
+    async session({ session, token }: { session: Session; token: JWT }): Promise<Session> {
       const t = token as JWTWithUID;
-      if (t.uid) {
-        (session.user as SessionUserWithId).id = t.uid;
-      }
+      if (t.uid) (session.user as SessionUserWithId).id = t.uid;
       return session;
     },
   },

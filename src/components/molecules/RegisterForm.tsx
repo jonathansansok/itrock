@@ -1,37 +1,106 @@
-
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "@/store/slices/usersSlice";
 import { signIn } from "next-auth/react";
+import TextInput from "@/components/atoms/TextInput";
+import { isValidEmail, isStrongPassword } from "@/lib/validators";
 
 export default function RegisterForm() {
   const d = useDispatch();
-  const [name, setName] = useState("Ada");
-  const [email, setEmail] = useState("tu@example.com");
-  const [password, setPassword] = useState("demo");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [touched, setTouched] = useState<{ name?: boolean; email?: boolean; password?: boolean; confirm?: boolean }>({});
+  const [loading, setLoading] = useState(false);
+
+  const emailOk = isValidEmail(email);
+  const passOk = isStrongPassword(password);
+  const confirmOk = confirm === password && passOk;
+  const nameOk = name.trim().length >= 2;
+  const canSubmit = nameOk && emailOk && passOk && confirmOk && !loading;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const emailOk = /\S+@\S+\.\S+/.test(email);
-    const passOk = password.length >= 3;
-    if (!emailOk) { console.log("[RegisterForm] email inválido"); return; }
-    if (!passOk) { console.log("[RegisterForm] password corto"); return; }
-
-    d(addUser({ id: email, name: name || email.split("@")[0], email }));
-    console.log("[RegisterForm] guardado en local, signIn…");
-    await signIn("credentials", { name, email, password, callbackUrl: "/feed" });
+    if (!canSubmit) return;
+    setLoading(true);
+    try {
+      d(addUser({ id: email, name: name || email.split("@")[0], email }));
+      await signIn("credentials", { name, email, password, callbackUrl: "/feed" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-3">
-      <input required value={name} onChange={e=>setName(e.target.value)} placeholder="Nombre"
-             className="w-full rounded-xl border px-3 py-2 text-sm" />
-      <input required type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email"
-             className="w-full rounded-xl border px-3 py-2 text-sm" />
-      <input required minLength={3} type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Contraseña"
-             className="w-full rounded-xl border px-3 py-2 text-sm" />
-      <button type="submit" className="w-full rounded-xl bg-black px-3 py-2 text-white">Crear cuenta</button>
+    <form onSubmit={onSubmit} className="space-y-3" noValidate>
+      <TextInput
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        onBlur={() => setTouched((t) => ({ ...t, name: true }))}
+        placeholder="Nombre"
+        aria-label="Nombre"
+        aria-invalid={touched.name ? !nameOk : undefined}
+      />
+      {touched.name && !nameOk && (
+        <p className="text-xs text-red-400">Ingresá tu nombre (mínimo 2 caracteres).</p>
+      )}
+
+      <TextInput
+        required
+        type="email"
+        inputMode="email"
+        autoComplete="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        onBlur={() => setTouched((t) => ({ ...t, email: true }))}
+        placeholder="Email"
+        aria-label="Email"
+        aria-invalid={touched.email ? !emailOk : undefined}
+      />
+      {touched.email && !emailOk && (
+        <p className="text-xs text-red-400">Email inválido (ej: usuario@dominio.com).</p>
+      )}
+
+      <TextInput
+        required
+        type="password"
+        autoComplete="new-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        onBlur={() => setTouched((t) => ({ ...t, password: true }))}
+        placeholder="Contraseña"
+        aria-label="Contraseña"
+        aria-invalid={touched.password ? !passOk : undefined}
+      />
+      {touched.password && !passOk && (
+        <p className="text-xs text-red-400">Mínimo 8 caracteres, 1 mayúscula y 1 número.</p>
+      )}
+
+      <TextInput
+        required
+        type="password"
+        autoComplete="new-password"
+        value={confirm}
+        onChange={(e) => setConfirm(e.target.value)}
+        onBlur={() => setTouched((t) => ({ ...t, confirm: true }))}
+        placeholder="Confirmar contraseña"
+        aria-label="Confirmar contraseña"
+        aria-invalid={touched.confirm ? !confirmOk : undefined}
+      />
+      {touched.confirm && !confirmOk && (
+        <p className="text-xs text-red-400">Las contraseñas no coinciden.</p>
+      )}
+
+      <button
+        type="submit"
+        disabled={!canSubmit}
+        className="w-full rounded-xl bg-black px-3 py-2 text-white disabled:opacity-60 disabled:cursor-not-allowed hover:bg-neutral-800 active:scale-95 transition"
+      >
+        {loading ? "Creando…" : "Crear cuenta"}
+      </button>
     </form>
   );
 }
