@@ -5,14 +5,30 @@ import { isValidEmail, isStrongPassword } from "@/lib/validators";
 
 async function toastError(msg: string) {
   const Swal = (await import("sweetalert2")).default;
+
+  const closeOnAnyPointer = () => Swal.close();
+
+  if (Swal.isVisible()) Swal.close();
+
   await Swal.fire({
     toast: true,
     position: "top-end",
     icon: "error",
     title: msg,
     showConfirmButton: false,
-    timer: 2200,
+    timer: 3000,
     timerProgressBar: true,
+    allowEscapeKey: true,
+    allowOutsideClick: true,
+    didOpen: (toast) => {
+      // cerrar al click en el propio toast
+      toast.addEventListener("click", () => Swal.close());
+      // cerrar al primer click en cualquier parte
+      document.addEventListener("pointerdown", closeOnAnyPointer, { once: true, capture: true });
+    },
+    willClose: () => {
+      document.removeEventListener("pointerdown", closeOnAnyPointer, true);
+    },
   });
 }
 

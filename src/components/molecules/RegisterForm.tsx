@@ -1,4 +1,3 @@
-// social-basic/src/components/molecules/RegisterForm.tsx
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
