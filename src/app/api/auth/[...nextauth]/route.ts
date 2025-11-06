@@ -1,4 +1,3 @@
-// src/app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
@@ -38,7 +37,7 @@ export const authOptions = {
 
   pages: {
     signIn: "/login",
-    error: "/login", // ← manda todos los errores a /login
+    error: "/login",
   },
 
   callbacks: {

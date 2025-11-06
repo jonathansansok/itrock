@@ -23,7 +23,7 @@ export default function Avatar({ name, size = 64, seed = name, emoji, className 
       aria-label={name}
       title={name}
     >
-      <div className="absolute inset-[2px] rounded-full bg-black/40" />
+     <div className="absolute inset-0.5 rounded-full bg-black/40" />
       <span className="relative z-10" style={{ fontSize: Math.round(size * 0.42), lineHeight: 1 }}>
         {emoji ?? initials}
       </span>

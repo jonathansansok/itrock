@@ -1,4 +1,3 @@
-//social-basic\src\interfaces\domain.ts
 
 export interface SessionUser {
     id: string;

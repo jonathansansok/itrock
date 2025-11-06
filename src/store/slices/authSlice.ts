@@ -1,4 +1,3 @@
-//social-basic\src\store\slices\authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, SessionUser } from "@/types";
 

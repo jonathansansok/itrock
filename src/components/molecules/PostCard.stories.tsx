@@ -1,4 +1,3 @@
-//social-basic\src\components\molecules\PostCard.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import PostCard from "./PostCard";
 import type { Post } from "@/types";

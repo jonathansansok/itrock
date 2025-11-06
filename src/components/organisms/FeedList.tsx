@@ -1,4 +1,3 @@
-//social-basic\src\components\organisms\FeedList.tsx
 import { Post } from "@/types";
 import PostCard from "@/components/molecules/PostCard";
 

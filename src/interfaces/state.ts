@@ -1,4 +1,3 @@
-//social-basic\src\interfaces\state.ts
 import type { SessionUser, Post } from "./domain";
 
 export interface AuthState {
