@@ -6,19 +6,12 @@ import RegisterForm from "@/components/molecules/RegisterForm";
 import InstagramGlyph from "@/components/brand/InstagramGlyph";
 import InstagramWordmark from "@/components/brand/InstagramWordmark";
 import InstaSansoWordmark from "@/components/brand/InstaSansoWordmark";
-
+import LoggedInBanner from "@/components/molecules/LoggedInBanner";
 export default function Page() {
   const { data: session } = useSession();
 
   if (session) {
-    return (
-      <div className="p-6 text-neutral-200">
-        Ya estás logueado. Ir al{" "}
-        <Link href="/feed" className="underline text-blue-400 hover:text-blue-300">
-          Feed
-        </Link>
-      </div>
-    );
+    return <LoggedInBanner dest="/feed" />;
   }
 
   return (

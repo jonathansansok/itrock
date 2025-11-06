@@ -6,18 +6,11 @@ import InstagramGlyph from "@/components/brand/InstagramGlyph";
 import InstagramWordmark from "@/components/brand/InstagramWordmark";
 import InstaSansoWordmark from "@/components/brand/InstaSansoWordmark";
 import LoginCallbackGuard from "@/components/guards/LoginCallbackGuard";
-
+import LoggedInBanner from "@/components/molecules/LoggedInBanner";
 export default async function Page() {
   const session = await getServerSession();
   if (session) {
-    return (
-      <div className="p-6 text-neutral-200">
-        Ya estás logueado. Ir al{" "}
-        <Link href="/feed" className="underline text-blue-400 hover:text-blue-300">
-          Feed
-        </Link>
-      </div>
-    );
+    return <LoggedInBanner dest="/feed" />;
   }
 
   return (

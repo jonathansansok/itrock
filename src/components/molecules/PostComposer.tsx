@@ -44,17 +44,20 @@ export default function PostComposer() {
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder={isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"}
+        placeholder={
+          isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"
+        }
         disabled={!isAuth}
         className="w-full rounded-2xl bg-black border border-neutral-800 px-4 py-3 text-sm sm:text-base text-white placeholder:text-neutral-400 min-h-24 sm:min-h-28 disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:border-neutral-700"
       />
 
-<ImagePicker value={imageDataUrl} onImageAction={setImageDataUrl} />
+      <ImagePicker value={imageDataUrl} onImageAction={setImageDataUrl} />
 
       <div className="relative z-10 flex justify-end">
         <button
           disabled={!isAuth}
-          className="w-full sm:w-auto rounded-full bg-black px-4 py-2 text-sm sm:text-base text-white hover:bg-neutral-800 disabled:opacity-60"
+          className="w-full sm:w-auto rounded-full border border-neutral-800 bg-neutral-900/60 px-4 py-2
+             text-sm sm:text-base text-white hover:bg-neutral-800 disabled:opacity-60 active:scale-95 transition"
         >
           Publicar
         </button>
