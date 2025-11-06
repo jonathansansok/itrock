@@ -199,7 +199,7 @@ Callback URL de Google:
 http://localhost:3000/api/auth/callback/google
 
 🧪 Scripts
-Acción	Comando
+Acción	Comando 
 Instalar dependencias	pnpm install
 Ejecutar en dev	pnpm dev
 Build producción	pnpm build && pnpm start

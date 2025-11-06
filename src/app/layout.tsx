@@ -15,12 +15,12 @@ export const metadata: Metadata = {
   description: "Challenge IT-ROCK",
   icons: {
     icon: [
-      { url: "/icons/instagram.svg", type: "image/svg+xml" },
-      { url: "/icons/instagram-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/favicon.ico" },
+      { rel: "shortcut icon", url: "/favicon.ico" },
     ],
-    apple: "/icons/instagram-180.png",
   },
 };
+
 export const viewport = { themeColor: "#000000" } satisfies Viewport;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
