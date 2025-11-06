@@ -13,9 +13,7 @@ export const viewport: Viewport = { themeColor: "#000000" };
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  if (session) {
-    return <LoggedInBanner dest="/feed" />;
-  }
+  if (session) return <LoggedInBanner dest="/feed" />;
 
   return (
     <main className="relative min-h-dvh bg-black text-neutral-100">
@@ -45,7 +43,6 @@ export default async function Page() {
       </header>
 
       <section className="mx-auto grid w-full max-w-[980px] grid-cols-1 px-4 pb-12 lg:grid-cols-2 lg:gap-8">
-        {/* Lado izquierdo: claim */}
         <div className="hidden lg:flex flex-col justify-center">
           <h1 className="text-4xl font-semibold leading-tight">
             Mirá los momentos cotidianos de{" "}
@@ -57,7 +54,6 @@ export default async function Page() {
           </p>
         </div>
 
-        {/* Card login */}
         <div className="flex min-h-[60vh] items-center">
           <div className="w-full max-w-sm sm:max-w-md rounded-2xl bg-black/60 p-6 backdrop-blur-sm">
             <div className="mb-5 flex items-center gap-2 lg:hidden">

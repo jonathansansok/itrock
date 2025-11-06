@@ -1,5 +1,7 @@
- export const isValidEmail = (v: string) =>
-   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+export function isValidEmail(v: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+}
 
- export const isStrongPassword = (v: string) =>
-  /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(v);
+export function isStrongPassword(v: string) {
+  return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(v);
+}
