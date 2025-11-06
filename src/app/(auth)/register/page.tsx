@@ -1,4 +1,3 @@
-// social-basic/src/app/(auth)/register/page.tsx
 "use client";
 
 import { useSession } from "next-auth/react";
@@ -44,7 +43,12 @@ export default function Page() {
             <div className="mb-5 flex items-center gap-2 lg:hidden">
               <InstagramGlyph size={28} yOffset={-1} />
               <InstagramWordmark width={96} />
-              <span className="text-xs text-neutral-500 mx-1">by</span>
+              <span
+                className="text-xs text-neutral-500 mx-1 align-middle"
+                style={{ transform: "translateY(2px)", display: "inline-block" }}
+              >
+                by
+              </span>
               <InstaSansoWordmark width={96} fontSize={22} />
             </div>
 

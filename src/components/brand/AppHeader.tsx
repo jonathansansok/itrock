@@ -9,7 +9,7 @@ export default function AppHeader() {
   return (
     <header
       className={[
-       "sticky top-0 z-40 backdrop-blur bg-black/80 supports-backdrop-filter:bg-black/50",
+        "sticky top-0 z-40 backdrop-blur bg-black/80 supports-backdrop-filter:bg-black/50",
         "border-b border-neutral-900"
       ].join(" ")}
       role="banner"
@@ -18,8 +18,19 @@ export default function AppHeader() {
         <div className="flex items-center gap-2">
           <InstagramGlyph size={28} yOffset={-1} />
           <InstagramWordmark width={100} />
-          <span className="hidden sm:inline text-xs text-neutral-500 mx-1">by</span>
-          <InstaSansoWordmark width={96} fontSize={22} className="hidden sm:inline" />
+
+          <span
+            className="mx-1 text-xs text-neutral-500 align-middle hidden md:inline-block"
+            style={{ transform: "translateY(2px)" }}
+          >
+            by
+          </span>
+
+          <InstaSansoWordmark
+            width={96}
+            fontSize={22}
+            className="hidden md:inline-block align-middle"
+          />
         </div>
 
         <div className="flex items-center gap-2">

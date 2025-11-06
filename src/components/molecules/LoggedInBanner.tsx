@@ -16,7 +16,12 @@ export default function LoggedInBanner({ dest = "/feed" }: { dest?: string }) {
         <div className="mb-4 flex items-center justify-center gap-2">
           <InstagramGlyph size={28} yOffset={-1} />
           <InstagramWordmark width={96} />
-          <span className="text-xs text-neutral-500">by</span>
+          <span
+            className="text-xs text-neutral-500 align-middle"
+            style={{ transform: "translateY(2px)", display: "inline-block" }}
+          >
+            by
+          </span>
           <InstaSansoWordmark width={96} fontSize={22} />
         </div>
 
