@@ -43,7 +43,6 @@ export default function Page() {
       <section className="mx-auto w-full max-w-[980px] px-4 pb-12">
         <div className="mx-auto flex min-h-[60vh] max-w-sm sm:max-w-md items-center">
           <div className="w-full rounded-2xl border border-neutral-800/80 bg-black/60 p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur-sm">
-       
             <div className="mb-5 flex items-center gap-2 lg:hidden">
               <InstagramGlyph size={28} yOffset={-1} />
               <InstagramWordmark width={96} />
