@@ -3,7 +3,11 @@ import Image from "next/image";
 import { Post } from "@/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
-import { toggleLike, addComment, removeComment } from "@/store/slices/feedSlice";
+import {
+  toggleLike,
+  addComment,
+  removeComment,
+} from "@/store/slices/feedSlice";
 import { useState } from "react";
 import HeartButton from "@/components/atoms/HeartButton";
 
@@ -36,12 +40,15 @@ export default function PostCard({ post }: { post: Post }) {
     <article
       className={[
         "rounded-2xl bg-black/50 backdrop-blur-sm",
-        "p-3 sm:p-4"
+        "p-3 sm:p-4",
       ].join(" ")}
     >
       {post.imageUrl && (
         <div className="mb-3">
-          <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ aspectRatio: "1 / 1" }}>
+          <div
+            className="relative w-full overflow-hidden rounded-xl bg-black"
+            style={{ aspectRatio: "1 / 1" }}
+          >
             <Image
               src={post.imageUrl}
               alt="post"
@@ -84,7 +91,11 @@ export default function PostCard({ post }: { post: Post }) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder={canComment ? "Añade un comentario…" : "Iniciá sesión para comentar"}
+            placeholder={
+              canComment
+                ? "Añade un comentario…"
+                : "Iniciá sesión para comentar"
+            }
             disabled={!canComment}
             className="w-full rounded-full bg-neutral-900/60 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500
                        disabled:opacity-60 focus:outline-none focus:ring-0"
@@ -114,7 +125,13 @@ export default function PostCard({ post }: { post: Post }) {
                   aria-label="Eliminar comentario"
                   title="Eliminar comentario"
                   onClick={() =>
-                    d(removeComment({ postId: post.id, commentId: c.id, userId: c.userId }))
+                    d(
+                      removeComment({
+                        postId: post.id,
+                        commentId: c.id,
+                        userId: c.userId,
+                      })
+                    )
                   }
                   className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md
                              hover:bg-neutral-900 active:scale-95 transition"
