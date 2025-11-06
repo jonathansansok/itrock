@@ -3,14 +3,14 @@ import { useId } from "react";
 
 export default function InstagramGlyph({
   size = 40,
-  yOffset = -1.5, 
+  yOffset = -1.5,
   className = "",
 }: {
   size?: number;
   yOffset?: number;
   className?: string;
 }) {
-  const uid = useId(); 
+  const uid = useId();
 
   return (
     <svg
@@ -22,7 +22,13 @@ export default function InstagramGlyph({
       style={{ verticalAlign: "middle" }}
     >
       <defs>
-        <linearGradient id={`ig_grad_${uid}`} x1="69.27%" x2="128.20%" y1="129.46%" y2="29.46%">
+        <linearGradient
+          id={`ig_grad_${uid}`}
+          x1="69.27%"
+          x2="128.20%"
+          y1="129.46%"
+          y2="29.46%"
+        >
           <stop offset="0" stopColor="#FDD074" />
           <stop offset="25%" stopColor="#F77F34" />
           <stop offset="50%" stopColor="#DD326E" />
@@ -46,8 +52,6 @@ export default function InstagramGlyph({
           </svg>
         </mask>
       </defs>
-
-      {/* Aplico el offset vertical acá */}
       <g transform={`translate(0, ${yOffset})`}>
         <rect
           fill={`url(#ig_grad_${uid})`}

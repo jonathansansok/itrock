@@ -16,14 +16,12 @@ export default function Page() {
 
   return (
     <main className="relative min-h-dvh bg-black text-neutral-100">
-      {/* Glow de fondo sutil */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(600px_300px_at_20%_10%,rgba(236,72,153,0.20),transparent_60%),radial-gradient(500px_250px_at_80%_0%,rgba(139,92,246,0.18),transparent_60%)]"
       />
 
-      {/* Header brand */}
-      <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5">
+      <header className="mx-auto hidden w-full max-w-[980px] items-center justify-between px-4 py-5 lg:flex">
         <div className="flex items-center gap-3">
           <InstagramGlyph size={34} yOffset={-3} />
           <InstagramWordmark width={110} />
@@ -41,11 +39,10 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Card register centrada */}
       <section className="mx-auto w-full max-w-[980px] px-4 pb-12">
         <div className="mx-auto flex min-h-[60vh] max-w-sm sm:max-w-md items-center">
           <div className="w-full rounded-2xl border border-neutral-800/80 bg-black/60 p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur-sm">
-            {/* Brand compacto en mobile */}
+       
             <div className="mb-5 flex items-center gap-2 lg:hidden">
               <InstagramGlyph size={28} yOffset={-1} />
               <InstagramWordmark width={96} />

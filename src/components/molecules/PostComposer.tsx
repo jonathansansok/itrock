@@ -22,7 +22,13 @@ export default function PostComposer() {
     const f = e.target.files?.[0];
     if (!f) return;
     const dataUrl = await readFileAsDataURL(f);
-    const resized = await resizeDataUrl(dataUrl, 1600, 1600, "image/jpeg", 0.85);
+    const resized = await resizeDataUrl(
+      dataUrl,
+      1600,
+      1600,
+      "image/jpeg",
+      0.85
+    );
     setImageDataUrl(resized);
   };
 
@@ -31,9 +37,9 @@ export default function PostComposer() {
     const content = text.trim();
     if (!content && !imageDataUrl) return;
     if (!isAuth || !currentUser?.id) return;
-  
+
     const authorName = currentUser?.name || currentUser?.email || "Desconocido";
-  
+
     const post: Post = {
       id: crypto.randomUUID(),
       userId: currentUser.id,
@@ -44,13 +50,12 @@ export default function PostComposer() {
       comments: [],
       authorName,
     };
-  
+
     d(addPost(post));
     setText("");
     setImageDataUrl(null);
     if (fileRef.current) fileRef.current.value = "";
   };
-  
 
   return (
     <form
@@ -60,12 +65,13 @@ export default function PostComposer() {
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder={isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"}
+        placeholder={
+          isAuth ? "¿Qué estás pensando?" : "Iniciá sesión para publicar"
+        }
         disabled={!isAuth}
         className="w-full rounded-2xl bg-neutral-900/40 px-4 py-3 text-sm sm:text-base text-white placeholder:text-neutral-400 min-h-24 sm:min-h-28 disabled:opacity-60 focus:outline-none focus:ring-0"
       />
 
-      {/* barra de acciones */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <button
@@ -75,7 +81,6 @@ export default function PostComposer() {
             className="inline-flex items-center gap-2 rounded-full bg-neutral-900/50 px-3 py-2 hover:bg-neutral-800 active:scale-95 disabled:opacity-60"
             aria-label="Adjuntar imagen"
           >
-            {/* ícono imagen multicolor (inline, sin deps) */}
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
               <defs>
                 <linearGradient id="ig-mc" x1="0" x2="1" y1="1" y2="0">
@@ -91,7 +96,9 @@ export default function PostComposer() {
                 d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 12H5v-2.586l3.293-3.293a1 1 0 0 1 1.414 0L12 14l3.293-3.293a1 1 0 0 1 1.414 0L19 12.999V17Zm-9-7a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"
               />
             </svg>
-            <span className="hidden sm:inline text-sm text-neutral-200">Foto</span>
+            <span className="hidden sm:inline text-sm text-neutral-200">
+              Foto
+            </span>
           </button>
 
           <input
@@ -110,11 +117,12 @@ export default function PostComposer() {
           Publicar
         </button>
       </div>
-
-      {/* preview minimal */}
       {imageDataUrl && (
         <div className="relative mt-2">
-          <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ aspectRatio: "1 / 1" }}>
+          <div
+            className="relative w-full overflow-hidden rounded-xl bg-black"
+            style={{ aspectRatio: "1 / 1" }}
+          >
             <Image
               src={imageDataUrl}
               alt="preview"
@@ -126,7 +134,10 @@ export default function PostComposer() {
           </div>
           <button
             type="button"
-            onClick={() => { setImageDataUrl(null); if (fileRef.current) fileRef.current.value = ""; }}
+            onClick={() => {
+              setImageDataUrl(null);
+              if (fileRef.current) fileRef.current.value = "";
+            }}
             aria-label="Quitar imagen"
             className="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/60 hover:bg-black/80"
           >
