@@ -1,3 +1,4 @@
+//social-basic\src\components\molecules\PostCard.tsx
 "use client";
 import Image from "next/image";
 import { Post } from "@/interfaces";

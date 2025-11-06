@@ -1,3 +1,4 @@
+//social-basic\src\components\molecules\ImagePicker.tsx
 "use client";
 
 import { useCallback, useRef, useState } from "react";

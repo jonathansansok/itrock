@@ -1,3 +1,4 @@
+//social-basic\src\components\molecules\LogoutButton.tsx
 "use client";
 import { useState } from "react";
 import { signOut } from "next-auth/react";

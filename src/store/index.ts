@@ -1,3 +1,4 @@
+//social-basic\src\store\index.ts
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,

@@ -1,3 +1,4 @@
+//social-basic\src\store\slices\feedSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { FeedState, Post } from "@/interfaces";
 import type { ToggleLikePayload, AddCommentPayload, RemoveCommentPayload } from "@/interfaces";
