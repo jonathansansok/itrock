@@ -10,7 +10,8 @@ Deploy: (ejemplo) https://social-basic.vercel.app
 Social Basic es una aplicación tipo red social desarrollada como parte de un challenge técnico para evaluar el uso de Next.js 15, Redux Toolkit, Tailwind CSS 4 y TypeScript siguiendo Atomic Design.
 
 La app simula un entorno social básico con autenticación, feed de publicaciones, likes, comentarios y persistencia local.
-Está construida con enfoque SSR (Server-Side Rendering), reduciendo el CSR (Client-Side Rendering) al mínimo necesario.
+Está construida con enfoque SSR (Server-Side Rendering), reduciendo el CSR (Client-Side Rendering) al mínimo necesario. 
+No se incluyeron comentarios en el código porque no fue solicitado, si lo necesitan lo puedo hacer con gusto.
 
 ⚙️ Stack principal
 
