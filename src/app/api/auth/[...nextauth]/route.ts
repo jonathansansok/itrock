@@ -1,19 +1,18 @@
-
+// src/app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { Session } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       authorization: {
         params: {
-          prompt: "consent select_account", 
-
+          prompt: "consent select_account",
         },
       },
     }),
@@ -34,7 +33,14 @@ const handler = NextAuth({
       },
     }),
   ],
+
   session: { strategy: "jwt" },
+
+  pages: {
+    signIn: "/login",
+    error: "/login", // ← manda todos los errores a /login
+  },
+
   callbacks: {
     async jwt({ token, user }): Promise<JWT> {
       if (user) {
@@ -53,6 +59,8 @@ const handler = NextAuth({
       return session;
     },
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

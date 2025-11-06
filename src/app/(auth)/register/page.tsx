@@ -1,18 +1,20 @@
-
 "use client";
 
 import { useSession } from "next-auth/react";
-import RegisterForm from "@/components/molecules/RegisterForm";
 import Link from "next/link";
+import RegisterForm from "@/components/molecules/RegisterForm";
+import InstagramGlyph from "@/components/brand/InstagramGlyph";
+import InstagramWordmark from "@/components/brand/InstagramWordmark";
+import InstaSansoWordmark from "@/components/brand/InstaSansoWordmark";
 
 export default function Page() {
   const { data: session } = useSession();
 
   if (session) {
     return (
-      <div className="p-6 text-gray-900">
+      <div className="p-6 text-neutral-200">
         Ya estás logueado. Ir al{" "}
-        <Link href="/feed" className="underline text-blue-600 hover:text-blue-800">
+        <Link href="/feed" className="underline text-blue-400 hover:text-blue-300">
           Feed
         </Link>
       </div>
@@ -20,17 +22,60 @@ export default function Page() {
   }
 
   return (
-    <main className="grid min-h-dvh place-items-center bg-gray-50 text-gray-900">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow">
-        <h1 className="mb-4 text-xl font-semibold text-gray-900">Crear cuenta</h1>
-        <RegisterForm />
-        <p className="mt-4 text-sm text-gray-700">
-          ¿Ya tenés una cuenta?{" "}
-          <a href="/login" className="underline text-blue-600 hover:text-blue-800">
-            Iniciá sesión
-          </a>
-        </p>
-      </div>
+    <main className="relative min-h-dvh bg-black text-neutral-100">
+      {/* Glow de fondo sutil */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(600px_300px_at_20%_10%,rgba(236,72,153,0.20),transparent_60%),radial-gradient(500px_250px_at_80%_0%,rgba(139,92,246,0.18),transparent_60%)]"
+      />
+
+      {/* Header brand */}
+      <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5">
+        <div className="flex items-center gap-3">
+          <InstagramGlyph size={34} yOffset={-3} />
+          <InstagramWordmark width={110} />
+          <span
+            className="hidden sm:inline text-sm text-neutral-400 mx-1 align-middle"
+            style={{ transform: "translateY(2px)", display: "inline-block" }}
+          >
+            by
+          </span>
+          <InstaSansoWordmark
+            width={120}
+            fontSize={24}
+            className="hidden sm:inline align-middle"
+          />
+        </div>
+      </header>
+
+      {/* Card register centrada */}
+      <section className="mx-auto w-full max-w-[980px] px-4 pb-12">
+        <div className="mx-auto flex min-h-[60vh] max-w-sm sm:max-w-md items-center">
+          <div className="w-full rounded-2xl border border-neutral-800/80 bg-black/60 p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)] backdrop-blur-sm">
+            {/* Brand compacto en mobile */}
+            <div className="mb-5 flex items-center gap-2 lg:hidden">
+              <InstagramGlyph size={28} yOffset={-1} />
+              <InstagramWordmark width={96} />
+              <span className="text-xs text-neutral-500 mx-1">by</span>
+              <InstaSansoWordmark width={96} fontSize={22} />
+            </div>
+
+            <h1 className="mb-4 text-xl font-semibold">Crear cuenta</h1>
+            <RegisterForm />
+
+            <p className="mt-4 text-sm text-neutral-400">
+              ¿Ya tenés una cuenta?{" "}
+              <Link
+                href="/login"
+                className="font-medium bg-clip-text text-transparent bg-linear-to-r from-pink-500 to-violet-500 
+                           hover:from-pink-400 hover:to-violet-400 transition underline underline-offset-4 decoration-transparent hover:decoration-neutral-500"
+              >
+                Iniciá sesión
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
