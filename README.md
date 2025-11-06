@@ -190,10 +190,10 @@ Configuración de entorno en Settings > Environment Variables (NextAuth + Google
 Archivo .env.local:
 
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=pon_un_secret_seguro
+NEXTAUTH_SECRET=secret
 
 GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=yyy
+GOOGLE_CLIENT_SECRET=secret
 
 Callback URL de Google:
 http://localhost:3000/api/auth/callback/google
