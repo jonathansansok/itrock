@@ -1,3 +1,4 @@
+// social-basic/src/components/molecules/RegisterForm.tsx
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -5,6 +6,10 @@ import { addUser } from "@/store/slices/usersSlice";
 import { signIn } from "next-auth/react";
 import TextInput from "@/components/atoms/TextInput";
 import { isValidEmail, isStrongPassword } from "@/lib/validators";
+
+const inputCls =
+  "w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 " +
+  "placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-700";
 
 export default function RegisterForm() {
   const d = useDispatch();
@@ -43,10 +48,9 @@ export default function RegisterForm() {
         placeholder="Nombre"
         aria-label="Nombre"
         aria-invalid={touched.name ? !nameOk : undefined}
+        className={inputCls}
       />
-      {touched.name && !nameOk && (
-        <p className="text-xs text-red-400">Ingresá tu nombre (mínimo 2 caracteres).</p>
-      )}
+      {touched.name && !nameOk && <p className="text-xs text-red-400">Ingresá tu nombre (mínimo 2 caracteres).</p>}
 
       <TextInput
         required
@@ -59,10 +63,9 @@ export default function RegisterForm() {
         placeholder="Email"
         aria-label="Email"
         aria-invalid={touched.email ? !emailOk : undefined}
+        className={inputCls}
       />
-      {touched.email && !emailOk && (
-        <p className="text-xs text-red-400">Email inválido (ej: usuario@dominio.com).</p>
-      )}
+      {touched.email && !emailOk && <p className="text-xs text-red-400">Email inválido (ej: usuario@dominio.com).</p>}
 
       <TextInput
         required
@@ -74,10 +77,9 @@ export default function RegisterForm() {
         placeholder="Contraseña"
         aria-label="Contraseña"
         aria-invalid={touched.password ? !passOk : undefined}
+        className={inputCls}
       />
-      {touched.password && !passOk && (
-        <p className="text-xs text-red-400">Mínimo 8 caracteres, 1 mayúscula y 1 número.</p>
-      )}
+      {touched.password && !passOk && <p className="text-xs text-red-400">Mínimo 8 caracteres, 1 mayúscula y 1 número.</p>}
 
       <TextInput
         required
@@ -89,15 +91,15 @@ export default function RegisterForm() {
         placeholder="Confirmar contraseña"
         aria-label="Confirmar contraseña"
         aria-invalid={touched.confirm ? !confirmOk : undefined}
+        className={inputCls}
       />
-      {touched.confirm && !confirmOk && (
-        <p className="text-xs text-red-400">Las contraseñas no coinciden.</p>
-      )}
+      {touched.confirm && !confirmOk && <p className="text-xs text-red-400">Las contraseñas no coinciden.</p>}
 
       <button
         type="submit"
         disabled={!canSubmit}
-        className="w-full rounded-xl bg-black px-3 py-2 text-white disabled:opacity-60 disabled:cursor-not-allowed hover:bg-neutral-800 active:scale-95 transition"
+        className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-neutral-100 transition
+                   hover:bg-neutral-800 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Creando…" : "Crear cuenta"}
       </button>
