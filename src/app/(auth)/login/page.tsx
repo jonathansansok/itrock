@@ -26,8 +26,7 @@ export default async function Page() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(600px_300px_at_20%_10%,rgba(236,72,153,0.20),transparent_60%),radial-gradient(500px_250px_at_80%_0%,rgba(139,92,246,0.18),transparent_60%)]"
       />
 
-
-      <header className="mx-auto flex w-full max-w-[980px] items-center justify-between px-4 py-5 hidden lg:flex">
+      <header className="hidden lg:flex mx-auto w-full max-w-[980px] items-center justify-between px-4 py-5">
         <div className="flex items-center gap-3">
           <InstagramGlyph size={34} yOffset={-3} />
           <InstagramWordmark width={110} />
@@ -53,7 +52,8 @@ export default async function Page() {
             <span className="brand-gradient">tus mejores amigos.</span>
           </h1>
           <p className="mt-4 max-w-[38ch] text-neutral-300">
-            Compartí fotos y videos en tiempo real. Sumate a Instagram by J. Sansó y empezá ahora.
+            Compartí fotos y videos en tiempo real. Sumate a Instagram by J.
+            Sansó y empezá ahora.
           </p>
         </div>
 
