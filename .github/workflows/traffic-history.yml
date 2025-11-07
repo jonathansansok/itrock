@@ -46,7 +46,7 @@ jobs:
           VFILE=$(ls -1 .traffic/views_*.json  | sort | tail -1)
           CFILE=$(ls -1 .traffic/clones_*.json | sort | tail -1)
 
-          jq -n --slurpfile v "$VFILE" --slurpfile c "$CFILE" '
+          jq -r -n --slurpfile v "$VFILE" --slurpfile c "$CFILE" '
             (["date","views","uniqueViews","clones","uniqueCloners"] | @csv),
             (
               ($v[0].views // [])  as $vv |
