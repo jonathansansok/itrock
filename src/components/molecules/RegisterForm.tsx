@@ -1,4 +1,3 @@
-// social-basic/src/components/molecules/RegisterForm.tsx
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -10,6 +9,12 @@ import { isValidEmail, isStrongPassword } from "@/lib/validators";
 const inputCls =
   "w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 " +
   "placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-700";
+
+async function sha256(text: string) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
 
 export default function RegisterForm() {
   const d = useDispatch();
@@ -31,7 +36,8 @@ export default function RegisterForm() {
     if (!canSubmit) return;
     setLoading(true);
     try {
-      d(addUser({ id: email, name: name || email.split("@")[0], email }));
+      const passwordHash = await sha256(password);
+      d(addUser({ id: email, name: name || email.split("@")[0], email, passwordHash }));
       await signIn("credentials", { name, email, password, callbackUrl: "/feed" });
     } finally {
       setLoading(false);

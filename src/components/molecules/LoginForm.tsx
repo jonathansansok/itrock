@@ -1,22 +1,23 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
 import { isValidEmail, isStrongPassword } from "@/lib/validators";
 
 async function toastError(msg: string) {
   const Swal = (await import("sweetalert2")).default;
-  await Swal.fire({
-    toast: true,
-    position: "top-end",
-    icon: "error",
-    title: msg,
-    showConfirmButton: false,
-    timer: 2200,
-    timerProgressBar: true,
-  });
+  await Swal.fire({ toast: true, position: "top-end", icon: "error", title: msg, showConfirmButton: false, timer: 2200, timerProgressBar: true });
+}
+
+async function sha256(text: string) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
 export default function LoginForm() {
+  const users = useSelector((s: RootState) => s.users.items);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [touched, setTouched] = useState<{ email?: boolean; password?: boolean }>({});
@@ -30,14 +31,14 @@ export default function LoginForm() {
     e.preventDefault();
     if (!emailOk) return toastError("Email inválido.");
     if (!passOk) return toastError("Mínimo 8 caracteres, 1 mayúscula y 1 número.");
+
+    const u = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const hash = await sha256(password);
+    if (!u || u.passwordHash !== hash) return toastError("Usuario no registrado o contraseña incorrecta.");
+
     setLoading(true);
     try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-        callbackUrl: "/feed",
-      });
+      const res = await signIn("credentials", { email, password, redirect: false, callbackUrl: "/feed" });
       if (res?.error) return toastError("Credenciales incorrectas.");
       if (res?.ok) window.location.href = res.url ?? "/feed";
     } catch {
@@ -50,55 +51,32 @@ export default function LoginForm() {
   return (
     <form onSubmit={submit} className="space-y-3" noValidate>
       <input
-        type="email"
-        required
-        autoComplete="username"
-        inputMode="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        onBlur={() => setTouched((t) => ({ ...t, email: true }))}
-        placeholder="Email"
-        aria-label="Email"
-        aria-invalid={touched.email ? !emailOk : undefined}
+        type="email" required autoComplete="username" inputMode="email"
+        value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(t => ({ ...t, email: true }))}
+        placeholder="Email" aria-label="Email" aria-invalid={touched.email ? !emailOk : undefined}
         className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-700"
       />
-      {touched.email && !emailOk && (
-        <p className="text-xs text-red-400">Ingresá un email válido (ej. usuario@dominio.com).</p>
-      )}
+      {touched.email && !emailOk && <p className="text-xs text-red-400">Ingresá un email válido (ej. usuario@dominio.com).</p>}
 
       <input
-        type="password"
-        required
-        autoComplete="current-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        onBlur={() => setTouched((t) => ({ ...t, password: true }))}
-        placeholder="Contraseña"
-        aria-label="Contraseña"
-        aria-invalid={touched.password ? !passOk : undefined}
+        type="password" required autoComplete="current-password"
+        value={password} onChange={(e) => setPassword(e.target.value)} onBlur={() => setTouched(t => ({ ...t, password: true }))}
+        placeholder="Contraseña" aria-label="Contraseña" aria-invalid={touched.password ? !passOk : undefined}
         className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-700"
       />
-      {touched.password && !passOk && (
-        <p className="text-xs text-red-400">Mínimo 8 caracteres, con una mayúscula y un número.</p>
-      )}
+      {touched.password && !passOk && <p className="text-xs text-red-400">Mínimo 8 caracteres, con una mayúscula y un número.</p>}
 
       <button
-        type="submit"
-        disabled={!canSubmit}
-        className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-neutral-100 transition
-                   hover:bg-neutral-800 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+        type="submit" disabled={!canSubmit}
+        className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-neutral-100 transition hover:bg-neutral-800 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading ? "Ingresando..." : "Ingresar"}
       </button>
 
       <button
-        type="button"
-        aria-label="Entrar con Google"
+        type="button" aria-label="Entrar con Google"
         onClick={() => signIn("google", { callbackUrl: "/feed", prompt: "consent select_account" })}
-        className="w-full rounded-xl border border-neutral-800 bg-neutral-900/40 px-3 py-2
-                   hover:bg-neutral-800 active:scale-95 transition
-                   flex items-center justify-center gap-2 focus:outline-none
-                   focus-visible:ring-2 focus-visible:ring-neutral-700"
+        className="w-full rounded-xl border border-neutral-800 bg-neutral-900/40 px-3 py-2 hover:bg-neutral-800 active:scale-95 transition flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-700"
       >
         <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
           <path fill="#EA4335" d="M24 9.5c3.7 0 7.1 1.3 9.7 3.8l7.2-7.2C36.7 2.2 30.7 0 24 0 14.6 0 6.5 5.4 2.6 13.3l8.4 6.5C13 14 18 9.5 24 9.5z"/>

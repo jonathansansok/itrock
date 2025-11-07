@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { LocalUser } from "@/interfaces";
+import type { LocalUser } from "@/interfaces/domain"; 
 
 interface UsersState { items: LocalUser[] }
 
@@ -12,12 +12,7 @@ const slice = createSlice({
     addUser(state, action: PayloadAction<LocalUser>) {
       const email = action.payload.email.toLowerCase();
       const exists = state.items.some(u => u.email.toLowerCase() === email);
-      if (!exists) {
-        console.log("[usersSlice.addUser] adding", action.payload.email);
-        state.items.push(action.payload);
-      } else {
-        console.log("[usersSlice.addUser] already exists", action.payload.email);
-      }
+      if (!exists) state.items.push(action.payload);
     },
   },
 });
