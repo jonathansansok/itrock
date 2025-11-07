@@ -1,5 +1,3 @@
-[![traffic-history](https://github.com/jonathansansok/itrock/actions/workflows/traffic-history.yml/badge.svg?branch=main)](https://github.com/jonathansansok/itrock/actions/workflows/traffic-history.yml)
-
 Social Basic — Challenge Técnico Next.js 15 + Tailwind CSS 4 + Redux
 
 Desarrollador: Jonathan Sansó
@@ -39,7 +37,9 @@ Storybook:	npm run storybook
 2️⃣ Ir a http://localhost:3000
 
 3️⃣ Registrarse o loguearse
+
 4️⃣ Publicar texto o imagen
+
 5️⃣ Comentar, dar like y cerrar sesión
 
 🎯 Objetivo del challenge
@@ -108,31 +108,38 @@ Persistencia global del estado con redux-persist.
 Botón de logout funcional con signOut() → redirección a /login.
 
 ⚙️ Funcionalidades requeridas
+
 1️⃣ SSR y CSR
 
 Requerido: las pages deben ser SSR y minimizar el CSR.
+
 ✅ Implementado: /login, /register y /feed renderizadas en SSR.
+
 CSR limitado a componentes interactivos con "use client" solo donde es necesario.
 
 2️⃣ Estado Global
 
 Requerido: manejar autenticación, publicaciones y comentarios con Redux.
+
 ✅ Implementado: Redux Toolkit centralizado en /store/slices/ + redux-persist para mantener el estado tras recarga.
 
 3️⃣ Diseño
 
 Requerido: usar Tailwind CSS 4 con diseño responsive.
+
 ✅ Implementado: tema oscuro total, layout fluido, tipografía clara, sombras sutiles y proporciones ajustadas.
 
 4️⃣ TypeScript
 
 Requerido: definir interfaces centralizadas en carpeta aparte.
+
 ✅ Implementado: tipado completo con interfaces en /src/interfaces/
 (Post, Comment, User, SessionUser, payloads de Redux).
 
 5️⃣ Arquitectura
 
 Requerido: usar Atomic Design.
+
 ✅ Implementado:
 
 Atoms: TextInput, HeartButton
@@ -144,19 +151,23 @@ Organisms: FeedList
 Providers: ReduxProvider, SessionProvider, FeedHydrator
 
 🧱 Requisitos extra (opcionales)
+
 1️⃣ Storybook
 
 Requerido: documentar al menos dos componentes.
+
 ✅ Implementado: Storybook configurado con LoginForm y PostCard, con ejemplos interactivos y documentación visual.
 
 2️⃣ Interacciones
 
 Requerido: incorporar likes, favoritos o acciones sociales.
+
 ✅ Implementado: sistema de likes, comentarios y contador dinámico, estilo Instagram.
 
 3️⃣ Deploy
 
 Requerido: publicar la app y documentar la configuración.
+
 ✅ Implementado: deploy en Vercel, con build automático desde main.
 🔗 https://itrock-jonathan-sanso.vercel.app/
 
@@ -183,6 +194,7 @@ Deploy activo y documentado.
 🧠 Puntos a Evaluar
 
 Requerido: código limpio, buenas prácticas, UI clara, SSR eficiente y extras funcionales.
+
 ✅ Implementado:
 
 Estructura modular limpia y 100 % tipada.
