@@ -26,11 +26,11 @@ http://localhost:3000/api/auth/callback/google
 
 🧪 Despliegue local
 	
-Instalar dependencias	npm install
-Ejecutar en desarrollo	npm run dev
-Build producción	npm run build && npm start
+Instalar dependencias:	npm install
+Ejecutar en desarrollo:	npm run dev
+Build producción:	npm run build && npm start
 Lint	npm run lint
-Storybook	npm run storybook
+Storybook:	npm run storybook
 💬 Uso rápido
 
 1️⃣ npm run dev
@@ -73,7 +73,7 @@ Incluir una RRSS como método de logueo (OAuth).
 
 Redirigir al Feed una vez autenticado.
 
-Implementado:
+✅ Implementado:
 
 Formulario validado con email y contraseña seguras.
 
@@ -95,7 +95,7 @@ Permitir crear nuevas publicaciones o comentarios en tiempo real.
 
 Incluir botón de logout con redirección al login.
 
-Implementado:
+✅ Implementado:
 
 Publicaciones mockeadas cargadas por SSR desde getInitialPosts.
 
@@ -109,29 +109,29 @@ Botón de logout funcional con signOut() → redirección a /login.
 1️⃣ SSR y CSR
 
 Requerido: las pages deben ser SSR y minimizar el CSR.
-Implementado: /login, /register y /feed renderizadas en SSR.
+✅ Implementado: /login, /register y /feed renderizadas en SSR.
 CSR limitado a componentes interactivos con "use client" solo donde es necesario.
 
 2️⃣ Estado Global
 
 Requerido: manejar autenticación, publicaciones y comentarios con Redux.
-Implementado: Redux Toolkit centralizado en /store/slices/ + redux-persist para mantener el estado tras recarga.
+✅ Implementado: Redux Toolkit centralizado en /store/slices/ + redux-persist para mantener el estado tras recarga.
 
 3️⃣ Diseño
 
 Requerido: usar Tailwind CSS 4 con diseño responsive.
-Implementado: tema oscuro total, layout fluido, tipografía clara, sombras sutiles y proporciones ajustadas.
+✅ Implementado: tema oscuro total, layout fluido, tipografía clara, sombras sutiles y proporciones ajustadas.
 
 4️⃣ TypeScript
 
 Requerido: definir interfaces centralizadas en carpeta aparte.
-Implementado: tipado completo con interfaces en /src/interfaces/
+✅ Implementado: tipado completo con interfaces en /src/interfaces/
 (Post, Comment, User, SessionUser, payloads de Redux).
 
 5️⃣ Arquitectura
 
 Requerido: usar Atomic Design.
-Implementado:
+✅ Implementado:
 
 Atoms: TextInput, HeartButton
 
@@ -145,17 +145,17 @@ Providers: ReduxProvider, SessionProvider, FeedHydrator
 1️⃣ Storybook
 
 Requerido: documentar al menos dos componentes.
-Implementado: Storybook configurado con LoginForm y PostCard, con ejemplos interactivos y documentación visual.
+✅ Implementado: Storybook configurado con LoginForm y PostCard, con ejemplos interactivos y documentación visual.
 
 2️⃣ Interacciones
 
 Requerido: incorporar likes, favoritos o acciones sociales.
-Implementado: sistema de likes, comentarios y contador dinámico, estilo Instagram.
+✅ Implementado: sistema de likes, comentarios y contador dinámico, estilo Instagram.
 
 3️⃣ Deploy
 
 Requerido: publicar la app y documentar la configuración.
-Implementado: deploy en Vercel, con build automático desde main.
+✅ Implementado: deploy en Vercel, con build automático desde main.
 🔗 https://itrock-jonathan-sanso.vercel.app/
 
 Variables documentadas en .env.local.
@@ -170,7 +170,7 @@ Instrucciones de instalación y ejecución.
 
 Detalle del deploy.
 
-Implementado:
+✅ Implementado:
 
 Repositorio público: https://github.com/jonathansansok/itrock.git
 
@@ -181,7 +181,7 @@ Deploy activo y documentado.
 🧠 Puntos a Evaluar
 
 Requerido: código limpio, buenas prácticas, UI clara, SSR eficiente y extras funcionales.
-Implementado:
+✅ Implementado:
 
 Estructura modular limpia y 100 % tipada.
 
