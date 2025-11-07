@@ -1,31 +1,65 @@
 name: traffic-history
+
 on:
-  schedule: [{ cron: "0 3 * * *" }]
+  schedule: [{ cron: "0 3 * * *" }]  # ≈ 00:00 AR
   workflow_dispatch:
+
 permissions:
   contents: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
     env:
-      GH_HEADERS: >-
-        -H "Accept: application/vnd.github+json"
-        -H "X-GitHub-Api-Version: 2022-11-28"
-        -H "Authorization: Bearer ${{ secrets.GH_TRAFFIC_TOKEN }}"
+      GH_AUTH: ${{ secrets.GH_TRAFFIC_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Derive OWNER/REPO
         id: repo
         run: |
           echo "OWNER=${GITHUB_REPOSITORY%/*}" >> $GITHUB_OUTPUT
           echo "REPO=${GITHUB_REPOSITORY#*/}"   >> $GITHUB_OUTPUT
-      - run: mkdir -p .traffic
-      - name: Fetch views
+
+      - name: Guardrails
         run: |
-          eval curl -s $GH_HEADERS https://api.github.com/repos/${{ steps.repo.outputs.OWNER }}/${{ steps.repo.outputs.REPO }}/traffic/views > .traffic/views_$(date +%F).json
-      - name: Fetch clones
+          if [ -z "$GH_AUTH" ]; then echo "❌ Falta GH_TRAFFIC_TOKEN"; exit 1; fi
+
+      - name: Fetch views & clones (con status)
         run: |
-          eval curl -s $GH_HEADERS https://api.github.com/repos/${{ steps.repo.outputs.OWNER }}/${{ steps.repo.outputs.REPO }}/traffic/clones > .traffic/clones_$(date +%F).json
+          mkdir -p .traffic
+          for ep in views clones; do
+            url="https://api.github.com/repos/${{ steps.repo.outputs.OWNER }}/${{ steps.repo.outputs.REPO }}/traffic/${ep}"
+            code=$(curl -sS -w "%{http_code}" -o ".traffic/${ep}_$(date +%F).json" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              -H "Authorization: Bearer $GH_AUTH" \
+              "$url")
+            echo "GET $url → HTTP $code"
+            if [ "$code" != "200" ]; then
+              echo "❌ Error $ep (HTTP $code)"; cat ".traffic/${ep}_$(date +%F).json"; exit 1;
+            fi
+          done
+
+      - name: Build CSV summary (últimos 14 días)
+        run: |
+          VFILE=$(ls -1 .traffic/views_*.json  | sort | tail -1)
+          CFILE=$(ls -1 .traffic/clones_*.json | sort | tail -1)
+
+          jq -n --slurpfile v "$VFILE" --slurpfile c "$CFILE" '
+            (["date","views","uniqueViews","clones","uniqueCloners"] | @csv),
+            (
+              ($v[0].views // [])  as $vv |
+              ($c[0].clones // []) as $cc |
+              ( $vv | map({( .timestamp|split("T")[0]): {views:.count, uniqueViews:.uniques}}) | add ) as $vm |
+              ( $cc | map({( .timestamp|split("T")[0]): {clones:.count, uniqueCloners:.uniques}}) | add ) as $cm |
+              ( $vm + $cm ) as $m |
+              ($m|to_entries|sort_by(.key)|.[]|
+                [ .key, (.value.views//0), (.value.uniqueViews//0), (.value.clones//0), (.value.uniqueCloners//0) ] | @csv
+              )
+            )
+          ' > .traffic/traffic.csv
+
       - name: Commit & push
         run: |
           git config user.name "gh-bot"
