@@ -5,103 +5,248 @@ Repositorio: https://github.com/jonathansansok/itrock.git
 
 Deploy: https://itrock-jonathan-sanso.vercel.app/
 
-🧭 Descripción general
+Branch principal: main
 
-Social Basic es una aplicación tipo red social desarrollada como parte de un challenge técnico para evaluar el uso de Next.js 15, Redux Toolkit, Tailwind CSS 4 y TypeScript siguiendo Atomic Design.
+🚀 Deploy
 
-La app simula un entorno social básico con autenticación, feed de publicaciones, likes, comentarios y persistencia local.
-Está construida con enfoque SSR (Server-Side Rendering), reduciendo el CSR (Client-Side Rendering) al mínimo necesario. 
-No se incluyeron comentarios en el código porque no fue solicitado, si lo necesitan lo puedo hacer con gusto.
+Hosting: Vercel
+Branch principal: main
+Build automático: en cada push
+Variables configuradas: (NextAuth + Google OAuth)
 
-⚙️ Stack principal
+🧾 Variables de entorno (.env)
+NEXTAUTH_URL=http://localhost:3000  
+NEXTAUTH_SECRET=secret  
 
-Next.js 15 (App Router)
+GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com  
+GOOGLE_CLIENT_SECRET=secret  
 
-TypeScript
+# Callback
+http://localhost:3000/api/auth/callback/google
 
-Tailwind CSS 4
+🧪 Despliegue local
+	
+Instalar dependencias	npm install
+Ejecutar en desarrollo	npm run dev
+Build producción	npm run build && npm start
+Lint	npm run lint
+Storybook	npm run storybook
+💬 Uso rápido
 
-NextAuth (JWT strategy)
+1️⃣ npm run dev
+2️⃣ Ir a http://localhost:3000
 
-Redux Toolkit + redux-persist
-
-Storybook
-
-Vercel (deploy)
+3️⃣ Registrarse o loguearse
+4️⃣ Publicar texto o imagen
+5️⃣ Comentar, dar like y cerrar sesión
 
 🎯 Objetivo del challenge
 
-Evaluar la capacidad de:
+El challenge tiene como objetivo evaluar conocimientos en Next.js 15, Tailwind CSS 4 y Redux Toolkit, observando:
 
-Implementar autenticación segura con NextAuth (Credentials + OAuth).
+Estructura y organización del código
 
-Gestionar estado global con Redux Toolkit.
+SSR efectivo con mínima carga cliente
 
-Aplicar SSR y optimizar el uso de CSR.
+Buenas prácticas con TypeScript
 
-Estructurar un proyecto con Atomic Design.
+Diseño responsive y moderno
 
-Diseñar una UI clara, responsiva y funcional.
+Manejo de autenticación y estado global
 
-Documentar componentes con Storybook.
+A continuación, se listan las consignas oficiales junto con su implementación real en Social Basic 👇
+
+🧩 Vistas
+1️⃣ Login
+
+Requerido:
+
+Permitir login con formulario de email y contraseña.
+
+Validaciones básicas (campos requeridos, formato de email).
+
+Usar NextAuth para autenticación y sesión.
+
+Simular autenticación sin backend (redux-persist/localStorage).
+
+Incluir una RRSS como método de logueo (OAuth).
+
+Redirigir al Feed una vez autenticado.
+
+Implementado:
+
+Formulario validado con email y contraseña seguras.
+
+Sesión manejada con NextAuth (Credentials + Google OAuth).
+
+Simulación local sin backend: usuarios registrados en redux-persist con contraseña hasheada (SHA-256).
+
+Redirección automática al Feed tras login exitoso.
+
+SweetAlert2 para mensajes visuales de error/éxito.
+
+2️⃣ Feed
+
+Requerido:
+
+Mostrar publicaciones con comentarios mockeados.
+
+Permitir crear nuevas publicaciones o comentarios en tiempo real.
+
+Incluir botón de logout con redirección al login.
+
+Implementado:
+
+Publicaciones mockeadas cargadas por SSR desde getInitialPosts.
+
+Nuevos posts, likes y comentarios en tiempo real con Redux Toolkit.
+
+Persistencia global del estado con redux-persist.
+
+Botón de logout funcional con signOut() → redirección a /login.
+
+⚙️ Funcionalidades requeridas
+1️⃣ SSR y CSR
+
+Requerido: las pages deben ser SSR y minimizar el CSR.
+Implementado: /login, /register y /feed renderizadas en SSR.
+CSR limitado a componentes interactivos con "use client" solo donde es necesario.
+
+2️⃣ Estado Global
+
+Requerido: manejar autenticación, publicaciones y comentarios con Redux.
+Implementado: Redux Toolkit centralizado en /store/slices/ + redux-persist para mantener el estado tras recarga.
+
+3️⃣ Diseño
+
+Requerido: usar Tailwind CSS 4 con diseño responsive.
+Implementado: tema oscuro total, layout fluido, tipografía clara, sombras sutiles y proporciones ajustadas.
+
+4️⃣ TypeScript
+
+Requerido: definir interfaces centralizadas en carpeta aparte.
+Implementado: tipado completo con interfaces en /src/interfaces/
+(Post, Comment, User, SessionUser, payloads de Redux).
+
+5️⃣ Arquitectura
+
+Requerido: usar Atomic Design.
+Implementado:
+
+Atoms: TextInput, HeartButton
+
+Molecules: LoginForm, RegisterForm, PostCard, PostComposer
+
+Organisms: FeedList
+
+Providers: ReduxProvider, SessionProvider, FeedHydrator
+
+🧱 Requisitos extra (opcionales)
+1️⃣ Storybook
+
+Requerido: documentar al menos dos componentes.
+Implementado: Storybook configurado con LoginForm y PostCard, con ejemplos interactivos y documentación visual.
+
+2️⃣ Interacciones
+
+Requerido: incorporar likes, favoritos o acciones sociales.
+Implementado: sistema de likes, comentarios y contador dinámico, estilo Instagram.
+
+3️⃣ Deploy
+
+Requerido: publicar la app y documentar la configuración.
+Implementado: deploy en Vercel, con build automático desde main.
+🔗 https://itrock-jonathan-sanso.vercel.app/
+
+Variables documentadas en .env.local.
+
+🧾 Entregables
+
+Requerido:
+
+Repositorio público en GitHub.
+
+Instrucciones de instalación y ejecución.
+
+Detalle del deploy.
+
+Implementado:
+
+Repositorio público: https://github.com/jonathansansok/itrock.git
+
+README completo con pasos de instalación, entorno y despliegue.
+
+Deploy activo y documentado.
+
+🧠 Puntos a Evaluar
+
+Requerido: código limpio, buenas prácticas, UI clara, SSR eficiente y extras funcionales.
+Implementado:
+
+Estructura modular limpia y 100 % tipada.
+
+Buenas prácticas en Next.js + Redux + TypeScript.
+
+Diseño responsivo y coherente.
+
+SSR real con mínima carga cliente.
+
+Storybook operativo y deploy productivo.
 
 🧩 Funcionalidades principales
 🔐 Login
 
-Formulario con validación de email y contraseña.
+Validación de email y contraseña.
 
-Uso de NextAuth con Credentials y Google OAuth.
+NextAuth (Credentials + Google OAuth).
 
-Validaciones activas (email válido y contraseña con mayúscula + número).
+Validaciones activas y SweetAlert2 visual.
 
-SweetAlert2 para notificaciones de error o éxito.
-
-Redirección automática al feed tras autenticación.
+Redirección automática al Feed.
 
 📰 Feed
 
-Publicaciones mockeadas cargadas por SSR (getInitialPosts).
+Publicaciones mockeadas por SSR.
 
-Nuevas publicaciones creadas en tiempo real desde el cliente.
+Nuevos posts en tiempo real.
 
-Likes y comentarios con actualización instantánea.
+Likes y comentarios instantáneos.
 
-Persistencia local mediante redux-persist.
+Persistencia local con redux-persist.
 
-Visualización del autor (“Publicado por [nombre o email]”) y fecha formateada debajo del contenido.
+Autor y fecha visibles en cada post.
 
 📷 PostComposer
 
-Permite publicar texto e imagen.
+Publicación de texto o imagen.
 
-Previsualización antes de publicar.
+Previsualización antes de enviar.
 
-Reseteo automático de inputs tras publicación.
+Limpieza automática tras posteo.
 
 💬 Comentarios
 
-Añadir o eliminar comentarios propios.
+Agregar o eliminar comentarios propios.
 
 Envío con Enter o botón “Comentar”.
 
 ❤️ Interacciones
 
-Botón de like tipo Instagram (toggle instantáneo).
+Botón de like (toggle instantáneo).
 
-Contador de likes dinámico.
+Contador dinámico de likes.
 
 🚪 Logout
 
 Cierre de sesión con signOut() → redirección a /login.
 
 🧱 Arquitectura
-SSR / CSR
 
-/login, /register, /feed → renderizadas en servidor (SSR).
+SSR / CSR híbrido:
+/login, /register, /feed → SSR.
+CSR limitado a componentes interactivos.
 
-Componentes interactivos → CSR mínimo ("use client" solo donde se necesita).
-
-Atomic Design
+Atomic Design:
 
 Atoms: TextInput, HeartButton
 
@@ -111,129 +256,58 @@ Organisms: FeedList
 
 Providers: SessionProvider, ReduxProvider, FeedHydrator
 
-Estructura general
-src/
-  app/
-    (auth)/
-      login/
-      register/
-    feed/
-  components/
-    atoms/
-    molecules/
-    organisms/
-    providers/
-  store/
-    slices/
-  interfaces/
-  lib/
-    mockDb.ts
-    server/
-      getInitialPosts.ts
-
 ⚡ SSR + Redux integración
 
 getServerSession() protege rutas.
 
-getInitialPosts() inyecta publicaciones SSR → FeedHydrator sincroniza Redux.
+getInitialPosts() hidrata Redux desde el servidor.
 
-addPost, toggleLike, addComment, removeComment controlan el estado global.
+Reducers: addPost, toggleLike, addComment, removeComment.
 
-redux-persist conserva el estado tras recarga.
+Estado persistido con redux-persist.
 
 💅 Diseño (Tailwind CSS 4)
 
-Tema oscuro total (bg-black, tipografía clara).
+Tema oscuro moderno (bg-black, texto claro).
 
-Bordes suaves, sombras sutiles y elementos “pill”.
+Bordes suaves y sombras sutiles.
 
-Layout responsive hasta mobile vertical.
+Layout centrado (max-w-[680px]).
 
-Feed centrado (max-w-[680px]).
-
-Imagen del post con aspect-ratio: 1/1 y bordes redondeados.
+Responsive total (mobile → desktop).
 
 🧠 Tipado (TypeScript)
 
-Interfaces centralizadas en src/interfaces/:
+Interfaces centralizadas (src/interfaces/).
 
-Post, Comment, User, SessionUser
-
-Payloads Redux (AddCommentPayload, etc.)
-
-Todos los reducers y props están completamente tipados.
+Tipado completo para reducers, payloads y props.
 
 📘 Storybook
 
-Documentación visual en .storybook/
-Incluye ejemplos interactivos de:
+Configuración en .storybook/.
 
-LoginForm
-
-PostCard
+Componentes documentados: LoginForm y PostCard.
 
 Comando:
 
-npm storybook
+npm run storybook
 
-🚀 Deploy
+✅ Cumplimiento global del challenge
 
-Hosting: Vercel
+Todas las funcionalidades requeridas implementadas.
 
-Branch: main (producción) / dev (pre-release)
+SSR real + CSR mínimo.
 
-Build automático con cada push.
-Configuración de entorno en Settings > Environment Variables (NextAuth + Google OAuth).
+Autenticación simulada segura.
 
-🧾 Variables de entorno
+Estado global persistente con Redux Toolkit.
 
-Archivo .env.local:
+Atomic Design aplicado correctamente.
 
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=secret
+Storybook y deploy operativos.
 
-GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=secret
+Diseño moderno y responsive.
 
-Callback URL de Google:
-http://localhost:3000/api/auth/callback/google
+📋 Resultado final:
 
-🧪 Scripts
-Acción	Comando 
-Instalar dependencias	npm install
-Ejecutar en dev	npm dev
-Build producción	npm build && npm start
-Lint	npm lint
-Storybook	npm storybook
-💬 Uso rápido
-
-1️⃣ npm dev
-2️⃣ Ir a http://localhost:3000
-
-3️⃣ Registrarse o loguearse (mock)
-4️⃣ Publicar texto o imagen
-5️⃣ Comentar, dar like, y cerrar sesión
-
-🧩 Extras
-
-Validaciones visuales con SweetAlert2.
-
-Prehidratado SSR del feed.
-
-Carga mínima CSR para optimizar TTFB.
-
-Autoría dinámica: los nuevos posts muestran el nombre o email del usuario autenticado.
-
-Feedback UX inmediato (transiciones y estados de carga).
-
-🧠 Evaluación esperada
-
-Organización clara de código y carpetas.
-
-Buenas prácticas en Next.js, Redux y TypeScript.
-
-Diseño responsive funcional y coherente.
-
-SSR efectivo con mínima carga cliente.
-
-Storybook y deploy funcionando.
+El proyecto cumple y supera todas las consignas del challenge, demostrando dominio completo de Next.js, Redux Toolkit, Tailwind CSS y TypeScript, con foco en arquitectura, SSR efectivo y experiencia de usuario fluida.
