@@ -13,7 +13,22 @@ const inputCls =
 async function sha256(text: string) {
   const enc = new TextEncoder().encode(text);
   const buf = await crypto.subtle.digest("SHA-256", enc);
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function toastSuccess(msg: string) {
+  const Swal = (await import("sweetalert2")).default;
+  await Swal.fire({
+    toast: true,
+    position: "top-end",
+    icon: "success",
+    title: msg,
+    showConfirmButton: false,
+    timer: 1400,
+    timerProgressBar: true,
+  });
 }
 
 export default function RegisterForm() {
@@ -22,7 +37,12 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [touched, setTouched] = useState<{ name?: boolean; email?: boolean; password?: boolean; confirm?: boolean }>({});
+  const [touched, setTouched] = useState<{
+    name?: boolean;
+    email?: boolean;
+    password?: boolean;
+    confirm?: boolean;
+  }>({});
   const [loading, setLoading] = useState(false);
 
   const emailOk = isValidEmail(email);
@@ -37,8 +57,25 @@ export default function RegisterForm() {
     setLoading(true);
     try {
       const passwordHash = await sha256(password);
-      d(addUser({ id: email, name: name || email.split("@")[0], email, passwordHash }));
-      await signIn("credentials", { name, email, password, callbackUrl: "/feed" });
+      d(
+        addUser({
+          id: email,
+          name: name || email.split("@")[0],
+          email,
+          passwordHash,
+        })
+      );
+
+      await toastSuccess("Cuenta creada. Redirigiendo…");
+
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: "/feed",
+      });
+
+      window.location.assign("/feed");
     } finally {
       setLoading(false);
     }
@@ -56,7 +93,11 @@ export default function RegisterForm() {
         aria-invalid={touched.name ? !nameOk : undefined}
         className={inputCls}
       />
-      {touched.name && !nameOk && <p className="text-xs text-red-400">Ingresá tu nombre (mínimo 2 caracteres).</p>}
+      {touched.name && !nameOk && (
+        <p className="text-xs text-red-400">
+          Ingresá tu nombre (mínimo 2 caracteres).
+        </p>
+      )}
 
       <TextInput
         required
@@ -71,7 +112,11 @@ export default function RegisterForm() {
         aria-invalid={touched.email ? !emailOk : undefined}
         className={inputCls}
       />
-      {touched.email && !emailOk && <p className="text-xs text-red-400">Email inválido (ej: usuario@dominio.com).</p>}
+      {touched.email && !emailOk && (
+        <p className="text-xs text-red-400">
+          Email inválido (ej: usuario@dominio.com).
+        </p>
+      )}
 
       <TextInput
         required
@@ -85,7 +130,11 @@ export default function RegisterForm() {
         aria-invalid={touched.password ? !passOk : undefined}
         className={inputCls}
       />
-      {touched.password && !passOk && <p className="text-xs text-red-400">Mínimo 8 caracteres, 1 mayúscula y 1 número.</p>}
+      {touched.password && !passOk && (
+        <p className="text-xs text-red-400">
+          Mínimo 8 caracteres, 1 mayúscula y 1 número.
+        </p>
+      )}
 
       <TextInput
         required
@@ -99,7 +148,9 @@ export default function RegisterForm() {
         aria-invalid={touched.confirm ? !confirmOk : undefined}
         className={inputCls}
       />
-      {touched.confirm && !confirmOk && <p className="text-xs text-red-400">Las contraseñas no coinciden.</p>}
+      {touched.confirm && !confirmOk && (
+        <p className="text-xs text-red-400">Las contraseñas no coinciden.</p>
+      )}
 
       <button
         type="submit"
