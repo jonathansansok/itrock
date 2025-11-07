@@ -1,3 +1,5 @@
+[![traffic-history](https://github.com/jonathansansok/itrock/actions/workflows/traffic-history.yml/badge.svg?branch=main)](https://github.com/jonathansansok/itrock/actions/workflows/traffic-history.yml)
+
 Social Basic — Challenge Técnico Next.js 15 + Tailwind CSS 4 + Redux
 
 Desarrollador: Jonathan Sansó
