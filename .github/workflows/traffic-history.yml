@@ -33,3 +33,4 @@ jobs:
           git add .traffic
           git commit -m "traffic: $(date -I)" || echo "Nada para commitear"
           git push
+
