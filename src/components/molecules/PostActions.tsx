@@ -1,3 +1,4 @@
+//social-basic\src\components\molecules\PostActions.tsx
 "use client";
 
 import HeartButton from "@/components/atoms/HeartButton";
@@ -10,8 +11,7 @@ type Props = {
   likeAction: () => void;
 
   shareCount?: number;
-  shareAction: () => void;
-
+  shareUrl: string; // ✅ nueva prop para pasar el enlace
   saved: boolean;
   toggleSaveAction: () => void;
 
@@ -23,7 +23,7 @@ export default function PostActions({
   likesCount,
   likeAction,
   shareCount = 0,
-  shareAction,
+  shareUrl,
   saved,
   toggleSaveAction,
   showBookmark = true,
@@ -31,7 +31,7 @@ export default function PostActions({
   return (
     <div className="mt-2 flex items-center gap-3">
       <HeartButton liked={liked} count={likesCount} toggleAction={likeAction} />
-      <ShareButton count={shareCount} shareAction={shareAction} />
+      <ShareButton count={shareCount} url={shareUrl} />
       {showBookmark && (
         <BookmarkButton saved={saved} toggleAction={toggleSaveAction} />
       )}

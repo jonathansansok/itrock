@@ -102,15 +102,15 @@ export default function PostCard({ post }: { post: Post }) {
       </div>
 
       <PostActions
-        liked={!!post.likedByMe}
-        likesCount={post.likes}
-        likeAction={() => d(toggleLike({ postId: post.id }))}
-        shareCount={post.shareCount ?? 0}
-        shareAction={onShare}
-        saved={saved}
-        toggleSaveAction={onToggleSave}
-        showBookmark={!post.imageUrl}
-      />
+  liked={!!post.likedByMe}
+  likesCount={post.likes}
+  likeAction={() => d(toggleLike({ postId: post.id }))}
+  shareCount={post.shareCount ?? 0}
+  shareUrl={`${window.location.origin}/feed#post-${post.id}`} 
+  saved={saved}
+  toggleSaveAction={onToggleSave}
+  showBookmark={!post.imageUrl}
+/>
 
       <div className="mt-3">
         <form
