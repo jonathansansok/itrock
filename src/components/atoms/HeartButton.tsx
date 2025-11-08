@@ -17,8 +17,8 @@ export default function HeartButton({ liked, count, toggleAction }: Props) {
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
-        width="20"
-        height="20"
+        width="28"
+        height="28"
         className={liked ? "fill-red-500" : "fill-neutral-400"}
       >
         {liked ? (
