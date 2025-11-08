@@ -5,13 +5,13 @@ import { addUser } from "@/store/slices/usersSlice";
 import { signIn } from "next-auth/react";
 import TextInput from "@/components/atoms/TextInput";
 import TimedError from "@/components/atoms/TimedError";
+import Button from "@/components/atoms/Button";
 import { isValidEmail, isStrongPassword } from "@/lib/validators";
 import { sha256 } from "@/lib/crypto";
 import { toastSuccess } from "@/lib/toasts";
 
 const inputCls =
-  "w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 " +
-  "placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-700";
+  "w-full rounded-xl border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-700";
 
 export default function RegisterForm() {
   const d = useDispatch();
@@ -57,81 +57,39 @@ export default function RegisterForm() {
         className={inputCls}
       />
       {touched.name && !nameOk && (
-        <TimedError
-          text="Ingresá tu nombre (mínimo 2 caracteres)."
-          ms={3000}
-          onCloseAction={() => setTouched(t => ({ ...t, name: false }))}
-        />
+        <TimedError text="Ingresá tu nombre (mínimo 2 caracteres)." ms={3000} onCloseAction={() => setTouched(t => ({ ...t, name: false }))} />
       )}
 
       <TextInput
-        required
-        type="email"
-        inputMode="email"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        onBlur={() => setTouched(t => ({ ...t, email: true }))}
-        placeholder="Email"
-        aria-label="Email"
-        aria-invalid={touched.email ? !emailOk : undefined}
-        className={inputCls}
+        required type="email" inputMode="email" autoComplete="email"
+        value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(t => ({ ...t, email: true }))}
+        placeholder="Email" aria-label="Email" aria-invalid={touched.email ? !emailOk : undefined} className={inputCls}
       />
       {touched.email && !emailOk && (
-        <TimedError
-          text="Email inválido (ej: usuario@dominio.com)."
-          ms={3000}
-          onCloseAction={() => setTouched(t => ({ ...t, email: false }))}
-        />
+        <TimedError text="Email inválido (ej: usuario@dominio.com)." ms={3000} onCloseAction={() => setTouched(t => ({ ...t, email: false }))} />
       )}
 
       <TextInput
-        required
-        type="password"
-        autoComplete="new-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        onBlur={() => setTouched(t => ({ ...t, password: true }))}
-        placeholder="Contraseña"
-        aria-label="Contraseña"
-        aria-invalid={touched.password ? !passOk : undefined}
-        className={inputCls}
+        required type="password" autoComplete="new-password"
+        value={password} onChange={(e) => setPassword(e.target.value)} onBlur={() => setTouched(t => ({ ...t, password: true }))}
+        placeholder="Contraseña" aria-label="Contraseña" aria-invalid={touched.password ? !passOk : undefined} className={inputCls}
       />
       {touched.password && !passOk && (
-        <TimedError
-          text="Mínimo 8 caracteres, 1 mayúscula y 1 número."
-          ms={3000}
-          onCloseAction={() => setTouched(t => ({ ...t, password: false }))}
-        />
+        <TimedError text="Mínimo 8 caracteres, 1 mayúscula y 1 número." ms={3000} onCloseAction={() => setTouched(t => ({ ...t, password: false }))} />
       )}
 
       <TextInput
-        required
-        type="password"
-        autoComplete="new-password"
-        value={confirm}
-        onChange={(e) => setConfirm(e.target.value)}
-        onBlur={() => setTouched(t => ({ ...t, confirm: true }))}
-        placeholder="Confirmar contraseña"
-        aria-label="Confirmar contraseña"
-        aria-invalid={touched.confirm ? !confirmOk : undefined}
-        className={inputCls}
+        required type="password" autoComplete="new-password"
+        value={confirm} onChange={(e) => setConfirm(e.target.value)} onBlur={() => setTouched(t => ({ ...t, confirm: true }))}
+        placeholder="Confirmar contraseña" aria-label="Confirmar contraseña" aria-invalid={touched.confirm ? !confirmOk : undefined} className={inputCls}
       />
       {touched.confirm && !confirmOk && (
-        <TimedError
-          text="Las contraseñas no coinciden."
-          ms={3000}
-          onCloseAction={() => setTouched(t => ({ ...t, confirm: false }))}
-        />
+        <TimedError text="Las contraseñas no coinciden." ms={3000} onCloseAction={() => setTouched(t => ({ ...t, confirm: false }))} />
       )}
 
-      <button
-        type="submit"
-        disabled={!canSubmit}
-        className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-neutral-100 transition hover:bg-neutral-800 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        {loading ? "Creando…" : "Crear cuenta"}
-      </button>
+      <Button type="submit" disabled={!canSubmit} loading={loading} variant="primary" size="md" className="w-full">
+        Crear cuenta
+      </Button>
     </form>
   );
 }
