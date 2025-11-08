@@ -39,12 +39,12 @@ export default function AppHeader() {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center rounded-lg border border-neutral-800 bg-black/50 px-3 py-1.5">
+          {/* <div className="hidden sm:flex items-center rounded-lg border border-neutral-800 bg-black/50 px-3 py-1.5">
             <input
               placeholder="Buscar"
               className="w-40 bg-transparent text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none"
             />
-          </div>
+          </div> */}
 
           {isAuth && user?.id && (
             <Link

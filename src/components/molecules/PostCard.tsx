@@ -58,7 +58,10 @@ export default function PostCard({ post }: { post: Post }) {
     if (ok) d(registerShare({ postId: post.id }));
   };
   return (
-    <article className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4">
+    <article
+      id={`post-${post.id}`}
+      className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4 scroll-mt-20"
+    >
       <header className="mb-3 flex items-center justify-between">
         <div>
           <div className="text-sm font-semibold text-neutral-100">
