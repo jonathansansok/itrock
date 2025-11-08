@@ -1,4 +1,3 @@
-
 import type { Preview } from "@storybook/react";
 import React from "react";
 import "../src/app/globals.css";
@@ -10,6 +9,10 @@ const preview: Preview = {
   parameters: {
     nextjs: { appDirectory: true },
     controls: { expanded: true },
+
+    // 👉 defaults visuales útiles para testear componentes
+    viewport: { defaultViewport: "responsive" },
+    backgrounds: { default: "dark" },
   },
   decorators: [
     (Story) => (

@@ -1,4 +1,3 @@
-
 import type { StorybookConfig } from "@storybook/react-webpack5";
 import type { Configuration as WebpackConfig } from "webpack";
 import path from "path";
@@ -8,6 +7,9 @@ const config: StorybookConfig = {
   addons: ["@storybook/addon-essentials", "@storybook/addon-interactions"],
   framework: { name: "@storybook/react-webpack5", options: {} },
   docs: { autodocs: "tag" },
+
+  // 👉 sirve para poder referenciar archivos de /public en las stories (imágenes locales, etc.)
+  staticDirs: ["../public"],
 
   webpackFinal: async (cfg) => {
     const wb = cfg as WebpackConfig;
