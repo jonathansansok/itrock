@@ -39,7 +39,7 @@ export default function ShareButton({ count, url }: Props) {
       <svg
         aria-label="Compartir"
         fill="currentColor"
-        height="24"
+        height="23"
         role="img"
         viewBox="0 0 24 24"
         width="24"
