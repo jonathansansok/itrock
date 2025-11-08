@@ -55,11 +55,18 @@ export default function AppHeader() {
           {isAuth && user?.id && (
             <>
               {isProfile ? (
-                // 🔁 En perfil → mostrar botón “Home”
+                // En PERFIL → botón Home
                 <Link
                   href="/feed"
                   aria-label="Volver al feed"
-                  className="inline-flex items-center rounded-full border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 transition px-2 py-1.5"
+                  className="
+      inline-flex items-center justify-center rounded-full
+      border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800
+      active:scale-95 transition
+      w-8 h-8 p-0.5               /* 🟢 mobile: círculo perfecto */
+      md:w-auto md:h-auto         /* 🖥️ desktop: tamaño libre */
+      md:px-2 md:py-1.5           /* 🖥️ desktop: padding de píldora */
+    "
                 >
                   <Home size={20} className="text-neutral-300" />
                   <span className="hidden md:inline ml-2 text-sm text-neutral-300">
@@ -67,11 +74,18 @@ export default function AppHeader() {
                   </span>
                 </Link>
               ) : (
-                // 🧑 En feed → mostrar botón “Perfil”
+                // En FEED → botón Perfil
                 <Link
                   href={`/u/${encodeURIComponent(user.id)}`}
                   aria-label="Ir a mi perfil"
-                  className="inline-flex items-center rounded-full border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 transition pl-0.5 pr-2 py-0.5"
+                  className="
+      inline-flex items-center justify-center rounded-full
+      border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800
+      active:scale-95 transition
+      w-8 h-8 p-0.5               /* 🟢 mobile: círculo perfecto */
+      md:w-auto md:h-auto         /* 🖥️ desktop: tamaño libre */
+      md:pl-0.5 md:pr-2 md:py-0.5 /* 🖥️ desktop: padding de píldora */
+    "
                 >
                   <Avatar name={user.name || user.email || "Yo"} size={28} />
                   <span className="hidden md:inline ml-2 text-sm text-neutral-300">

@@ -1,4 +1,3 @@
-//social-basic\src\components\atoms\HeartButton.tsx
 "use client";
 
 type Props = { liked: boolean; count: number; toggleAction: () => void };

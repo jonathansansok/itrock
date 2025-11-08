@@ -1,4 +1,3 @@
-// src/lib/share.ts
 import Swal from "sweetalert2";
 
 type SharePayload = { title?: string; text?: string; url?: string };
@@ -13,8 +12,6 @@ function isMobileUA() {
 export async function shareSmart(url: string, title?: string, text?: string): Promise<boolean> {
   const message = [text || "", url].filter(Boolean).join(" ").trim();
   const waEncoded = encodeURIComponent(message);
-
-  // 1️⃣ Web Share API (móviles modernos)
   try {
     const nav = navigator as ShareNavigator;
     if (nav && typeof nav.share === "function") {
@@ -22,16 +19,13 @@ export async function shareSmart(url: string, title?: string, text?: string): Pr
       return true;
     }
   } catch {
-    // seguimos con fallback
   }
 
-  // 2️⃣ Móvil → abrir WhatsApp app
   if (isMobileUA()) {
     window.location.href = `https://wa.me/?text=${waEncoded}`;
     return true;
   }
 
-  // 3️⃣ Desktop → copiar al portapapeles + mostrar alerta elegante
   try {
     await navigator.clipboard.writeText(url);
     await Swal.fire({

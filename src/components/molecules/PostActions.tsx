@@ -1,4 +1,3 @@
-//social-basic\src\components\molecules\PostActions.tsx
 "use client";
 
 import HeartButton from "@/components/atoms/HeartButton";
@@ -11,7 +10,7 @@ type Props = {
   likeAction: () => void;
 
   shareCount?: number;
-  shareUrl: string; // ✅ nueva prop para pasar el enlace
+  shareUrl: string;
   saved: boolean;
   toggleSaveAction: () => void;
 
