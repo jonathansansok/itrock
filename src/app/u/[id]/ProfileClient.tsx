@@ -42,8 +42,7 @@ export default function ProfileClient({
 
   return (
     <div className="mx-auto w-full max-w-[680px] px-3 sm:px-4 py-4">
-     <ProfileTabs value={tab} onChangeAction={setTab} />
-
+      <ProfileTabs value={tab} onChangeAction={setTab} />
 
       {tab === "pubs" &&
         (publications.length ? (
@@ -60,7 +59,7 @@ export default function ProfileClient({
         (saved.length ? (
           <div className="space-y-6">
             {saved.map((p) => (
-              <PostCard key={p.id} post={p} />
+              <PostCard key={p.id} post={p} saveUserId={userId} />
             ))}
           </div>
         ) : (
@@ -71,7 +70,10 @@ export default function ProfileClient({
         (comments.length ? (
           <ul className="space-y-3">
             {comments.map(({ post, comment }) => (
-              <li key={comment.id} className="rounded-2xl bg-black/50 p-3 sm:p-4">
+              <li
+                key={comment.id}
+                className="rounded-2xl bg-black/50 p-3 sm:p-4"
+              >
                 <div className="mb-2">
                   <PostMini post={post} />
                 </div>
