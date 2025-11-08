@@ -1,4 +1,4 @@
-import AppHeader from "@/components/brand/AppHeader";
+import AppHeader from "@/components/organisms/AppHeader";
 import { getInitialPosts } from "@/lib/server/getInitialPosts";
 import ProfileClient from "./ProfileClient";
 

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
+import { LogOut } from "lucide-react";
 import Swal from "sweetalert2";
 
 export default function LogoutButton() {
@@ -20,7 +21,7 @@ export default function LogoutButton() {
       background: "#111",
       color: "#fff",
       confirmButtonColor: "#0ea5e9",
-      cancelButtonColor: "#374151", 
+      cancelButtonColor: "#374151",
       focusCancel: true,
     });
 
@@ -34,10 +35,20 @@ export default function LogoutButton() {
     <button
       onClick={handleClick}
       disabled={loading}
-      className="w-full sm:w-auto rounded-xl border border-neutral-700 px-3 py-2 text-white hover:bg-neutral-900 disabled:opacity-60"
       aria-busy={loading}
+      aria-label="Cerrar sesión"
+      title="Cerrar sesión"
+      className="
+        inline-flex items-center justify-center rounded-full transition active:scale-95
+        bg-transparent hover:bg-transparent
+        md:bg-neutral-900/50 md:hover:bg-neutral-800 md:border md:border-neutral-800
+        w-8 h-8 p-0.5 md:w-auto md:h-auto md:px-2 md:py-1.5
+        text-neutral-300
+        disabled:opacity-60
+      "
     >
-      {loading ? "Cerrando..." : "Cerrar sesión"}
+      <LogOut className="w-5 h-5 md:w-[22px] md:h-[22px]" />
+      <span className="hidden md:inline ml-2 text-sm">Salir</span>
     </button>
   );
 }
