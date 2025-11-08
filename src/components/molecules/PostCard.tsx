@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { Post } from "@/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
@@ -50,52 +51,58 @@ export default function PostCard({ post }: { post: Post }) {
 
   const onShare = async () => {
     const url = `${window.location.origin}/post/${post.id}`;
-    const ok = await shareOrCopy(
-      url,
-      "Publicación",
-      post.content?.slice(0, 120)
-    );
+    const ok = await shareOrCopy(url, "Publicación", post.content?.slice(0, 120));
     if (ok) d(registerShare({ postId: post.id }));
   };
+
   return (
     <article
       id={`post-${post.id}`}
       className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4 scroll-mt-20"
     >
       <header className="mb-3 flex items-center justify-between">
-        <div>
-          <div className="text-sm font-semibold text-neutral-100">
-            Public. by {author}
-          </div>
+        <div className="text-sm font-semibold text-neutral-100">
+          Public. by{" "}
+          <Link href={`/u/${post.userId}`} className="hover:underline">
+            {author}
+          </Link>
         </div>
       </header>
 
       {post.imageUrl && (
-        <div className="mb-3">
-          <div
-            className="relative w-full overflow-hidden rounded-xl bg-black"
-            style={{ aspectRatio: "1 / 1" }}
-          >
-            <Image
-              src={post.imageUrl}
-              alt="post"
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 700px, 800px"
-              className="object-cover"
-              unoptimized
-            />
+        <>
+          <div className="mb-2">
+            <div
+              className="relative w-full overflow-hidden rounded-xl bg-black"
+              style={{ aspectRatio: "1 / 1" }}
+            >
+              <Image
+                src={post.imageUrl}
+                alt="post"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 700px, 800px"
+                className="object-cover"
+                unoptimized
+              />
+            </div>
           </div>
-        </div>
+
+          <div className="flex justify-end">
+            <BookmarkButton saved={saved} toggleAction={onToggleSave} />
+          </div>
+        </>
       )}
 
       {post.content && (
-        <p className="whitespace-pre-wrap text-[15px] leading-6 text-neutral-100">
+        <p className="mt-2 whitespace-pre-wrap text-[15px] leading-6 text-neutral-100">
           {post.content}
         </p>
       )}
-      <div className="text-xs text-neutral-400">
+
+      <div className="mt-1 text-xs text-neutral-400">
         {new Date(post.createdAt).toLocaleString()}
       </div>
+
       <div className="mt-2 flex items-center gap-3">
         <HeartButton
           liked={!!post.likedByMe}
@@ -103,7 +110,9 @@ export default function PostCard({ post }: { post: Post }) {
           onToggle={() => d(toggleLike({ postId: post.id }))}
         />
         <ShareButton count={post.shareCount ?? 0} shareAction={onShare} />
-        <BookmarkButton saved={saved} toggleAction={onToggleSave} />
+        {!post.imageUrl && (
+          <BookmarkButton saved={saved} toggleAction={onToggleSave} />
+        )}
       </div>
 
       <div className="mt-3">
@@ -119,19 +128,15 @@ export default function PostCard({ post }: { post: Post }) {
             onChange={(e) => setText(e.target.value)}
             onKeyDown={onKeyDown}
             placeholder={
-              canComment
-                ? "Añade un comentario…"
-                : "Iniciá sesión para comentar"
+              canComment ? "Añade un comentario…" : "Iniciá sesión para comentar"
             }
             disabled={!canComment}
-            className="w-full rounded-full bg-neutral-900/60 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500
-                       disabled:opacity-60 focus:outline-none focus:ring-0"
+            className="w-full rounded-full bg-neutral-900/60 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-0"
           />
           <button
             type="submit"
             disabled={!canComment || !text.trim()}
-            className="w-full sm:w-auto rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100
-                       hover:bg-neutral-800 disabled:opacity-60 active:scale-95 transition"
+            className="w-full sm:w-auto rounded-full bg-neutral-900 px-4 py-2 text-sm text-neutral-100 hover:bg-neutral-800 disabled:opacity-60 active:scale-95 transition"
           >
             Comentar
           </button>
@@ -160,8 +165,7 @@ export default function PostCard({ post }: { post: Post }) {
                       })
                     )
                   }
-                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md
-                             hover:bg-neutral-900 active:scale-95 transition"
+                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md hover:bg-neutral-900 active:scale-95 transition"
                 >
                   ×
                 </button>

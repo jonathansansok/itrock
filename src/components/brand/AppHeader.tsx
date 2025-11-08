@@ -26,7 +26,7 @@ export default function AppHeader() {
           <InstagramGlyph size={28} yOffset={-1} />
           <InstagramWordmark width={100} />
           <span
-            className="mx-1 text-xs text-neutral-500 align-middle hidden md:inline-block"
+            className="mx-1 hidden md:inline-block align-middle text-xs text-neutral-500"
             style={{ transform: "translateY(2px)" }}
           >
             by
@@ -38,26 +38,23 @@ export default function AppHeader() {
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* <div className="hidden sm:flex items-center rounded-lg border border-neutral-800 bg-black/50 px-3 py-1.5">
-            <input
-              placeholder="Buscar"
-              className="w-40 bg-transparent text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none"
-            />
-          </div> */}
-
+        <div className="flex items-center gap-3 sm:gap-4">
           {isAuth && user?.id && (
             <Link
               href={`/u/${encodeURIComponent(user.id)}`}
               aria-label="Ir a mi perfil"
               title={user.name || user.email || "Mi perfil"}
-              className="inline-flex items-center justify-center rounded-full border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 transition p-0.5"
+              className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/60 px-2.5 py-1.5
+                         hover:bg-neutral-800 active:scale-95 transition"
             >
-              <Avatar name={user.name || user.email || "Yo"} size={28} />
+              <Avatar name={user.name || user.email || "Yo"} size={24} />
+              <span className="hidden sm:inline text-sm text-neutral-200">Perfil</span>
             </Link>
           )}
 
-          <LogoutButton />
+          <div className="ml-2">
+            <LogoutButton />
+          </div>
         </div>
       </div>
     </header>
