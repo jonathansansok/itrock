@@ -3,7 +3,6 @@ export interface DumUser {
     name: string;
     emoji?: string;
   }
-  
   export interface Story {
     id: string;
     name: string;
