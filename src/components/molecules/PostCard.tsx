@@ -12,10 +12,9 @@ import {
   registerShare,
 } from "@/store/slices/feedSlice";
 import BookmarkButton from "@/components/atoms/BookmarkButton";
-import ShareButton from "@/components/atoms/ShareButton";
-import { shareOrCopy } from "@/lib/share";
+import { shareSmart } from "@/lib/share";
 import { useState } from "react";
-import HeartButton from "@/components/atoms/HeartButton";
+import PostActions from "@/components/molecules/PostActions";
 
 export default function PostCard({ post }: { post: Post }) {
   const d = useDispatch();
@@ -50,8 +49,8 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   const onShare = async () => {
-    const url = `${window.location.origin}/post/${post.id}`;
-    const ok = await shareOrCopy(url, "Publicación", post.content?.slice(0, 120));
+    const url = `${window.location.origin}/feed#post-${post.id}`;
+    const ok = await shareSmart(url, "Publicación", post.content?.slice(0, 120));
     if (ok) d(registerShare({ postId: post.id }));
   };
 
@@ -78,7 +77,7 @@ export default function PostCard({ post }: { post: Post }) {
             >
               <Image
                 src={post.imageUrl}
-                alt="post"
+                alt={post.content ? post.content.slice(0, 120) : ""}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 700px, 800px"
                 className="object-cover"
@@ -86,7 +85,6 @@ export default function PostCard({ post }: { post: Post }) {
               />
             </div>
           </div>
-
           <div className="flex justify-end">
             <BookmarkButton saved={saved} toggleAction={onToggleSave} />
           </div>
@@ -103,17 +101,16 @@ export default function PostCard({ post }: { post: Post }) {
         {new Date(post.createdAt).toLocaleString()}
       </div>
 
-      <div className="mt-2 flex items-center gap-3">
-        <HeartButton
-          liked={!!post.likedByMe}
-          count={post.likes}
-          onToggle={() => d(toggleLike({ postId: post.id }))}
-        />
-        <ShareButton count={post.shareCount ?? 0} shareAction={onShare} />
-        {!post.imageUrl && (
-          <BookmarkButton saved={saved} toggleAction={onToggleSave} />
-        )}
-      </div>
+      <PostActions
+        liked={!!post.likedByMe}
+        likesCount={post.likes}
+        likeAction={() => d(toggleLike({ postId: post.id }))}
+        shareCount={post.shareCount ?? 0}
+        shareAction={onShare}
+        saved={saved}
+        toggleSaveAction={onToggleSave}
+        showBookmark={!post.imageUrl}
+      />
 
       <div className="mt-3">
         <form
@@ -131,7 +128,7 @@ export default function PostCard({ post }: { post: Post }) {
               canComment ? "Añade un comentario…" : "Iniciá sesión para comentar"
             }
             disabled={!canComment}
-            className="w-full rounded-full bg-neutral-900/60 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus:ring-0"
+            className="w-full rounded-full bg-neutral-900/60 px-4 py-2 text-sm text-neutral-100 placeholder:text-neutral-500 disabled:opacity-60 focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-700"
           />
           <button
             type="submit"
@@ -165,7 +162,7 @@ export default function PostCard({ post }: { post: Post }) {
                       })
                     )
                   }
-                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md hover:bg-neutral-900 active:scale-95 transition"
+                  className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-md hover:bg-neutral-900 active:scale-95 transition focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-700"
                 >
                   ×
                 </button>

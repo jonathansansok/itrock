@@ -6,6 +6,9 @@ import type { RootState } from "@/store";
 import type { Post } from "@/interfaces";
 import PostCard from "@/components/molecules/PostCard";
 import PostMini from "@/components/molecules/PostMini";
+import ProfileTabs from "@/components/molecules/ProfileTabs";
+
+type Tab = "pubs" | "coms" | "saved";
 
 export default function ProfileClient({
   userId,
@@ -17,7 +20,7 @@ export default function ProfileClient({
   const posts = useSelector((s: RootState) => s.feed.posts);
   const list = posts?.length ? posts : initialPosts;
 
-  const [tab, setTab] = useState<"pubs" | "coms" | "saved">("pubs");
+  const [tab, setTab] = useState<Tab>("pubs");
 
   const publications = useMemo(
     () => list.filter((p) => p.userId === userId),
@@ -39,40 +42,7 @@ export default function ProfileClient({
 
   return (
     <div className="mx-auto w-full max-w-[680px] px-3 sm:px-4 py-4">
-      <div className="mb-4 flex flex-wrap justify-center gap-2 sm:gap-3">
-        <button
-          onClick={() => setTab("pubs")}
-          className={`flex-1 min-w-[100px] rounded-full px-4 py-2 text-sm sm:flex-none ${
-            tab === "pubs"
-              ? "bg-neutral-800 text-white"
-              : "bg-neutral-900/50 text-neutral-300"
-          }`}
-        >
-          Publicaciones
-        </button>
-
-        <button
-          onClick={() => setTab("coms")}
-          className={`flex-1 min-w-[100px] rounded-full px-4 py-2 text-sm sm:flex-none ${
-            tab === "coms"
-              ? "bg-neutral-800 text-white"
-              : "bg-neutral-900/50 text-neutral-300"
-          }`}
-        >
-          Comentarios
-        </button>
-
-        <button
-          onClick={() => setTab("saved")}
-          className={`flex-1 min-w-[100px] rounded-full px-4 py-2 text-sm sm:flex-none ${
-            tab === "saved"
-              ? "bg-neutral-800 text-white"
-              : "bg-neutral-900/50 text-neutral-300"
-          }`}
-        >
-          Guardados
-        </button>
-      </div>
+      <ProfileTabs value={tab} changeAction={setTab} />
 
       {tab === "pubs" &&
         (publications.length ? (
@@ -84,6 +54,7 @@ export default function ProfileClient({
         ) : (
           <p className="text-sm text-neutral-400">Sin publicaciones.</p>
         ))}
+
       {tab === "saved" &&
         (saved.length ? (
           <div className="space-y-6">
@@ -94,14 +65,12 @@ export default function ProfileClient({
         ) : (
           <p className="text-sm text-neutral-400">Sin guardados.</p>
         ))}
+
       {tab === "coms" &&
         (comments.length ? (
           <ul className="space-y-3">
             {comments.map(({ post, comment }) => (
-              <li
-                key={comment.id}
-                className="rounded-2xl bg-black/50 p-3 sm:p-4"
-              >
+              <li key={comment.id} className="rounded-2xl bg-black/50 p-3 sm:p-4">
                 <div className="mb-2">
                   <PostMini post={post} />
                 </div>
