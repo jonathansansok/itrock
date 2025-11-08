@@ -54,7 +54,7 @@ export default function AppHeader() {
           {isAuth && user?.id && (
             <>
               {isProfile ? (
-                // En PERFIL → botón Home
+               
                 <Link
                   href="/feed"
                   aria-label="Volver al feed"
@@ -62,9 +62,9 @@ export default function AppHeader() {
       inline-flex items-center justify-center rounded-full
       border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800
       active:scale-95 transition
-      w-8 h-8 p-0.5               /* 🟢 mobile: círculo perfecto */
-      md:w-auto md:h-auto         /* 🖥️ desktop: tamaño libre */
-      md:px-2 md:py-1.5           /* 🖥️ desktop: padding de píldora */
+      w-8 h-8 p-0.5               
+      md:w-auto md:h-auto        
+      md:px-2 md:py-1.5        
     "
                 >
                   <Home size={20} className="text-neutral-300" />
@@ -73,7 +73,7 @@ export default function AppHeader() {
                   </span>
                 </Link>
               ) : (
-                // En FEED → botón Perfil
+               
                 <Link
                   href={`/u/${encodeURIComponent(user.id)}`}
                   aria-label="Ir a mi perfil"
@@ -81,9 +81,9 @@ export default function AppHeader() {
       inline-flex items-center justify-center rounded-full
       border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800
       active:scale-95 transition
-      w-8 h-8 p-0.5               /* 🟢 mobile: círculo perfecto */
-      md:w-auto md:h-auto         /* 🖥️ desktop: tamaño libre */
-      md:pl-0.5 md:pr-2 md:py-0.5 /* 🖥️ desktop: padding de píldora */
+      w-8 h-8 p-0.5              
+      md:w-auto md:h-auto         
+      md:pl-0.5 md:pr-2 md:py-0.5 
     "
                 >
                   <Avatar name={user.name || user.email || "Yo"} size={28} />
