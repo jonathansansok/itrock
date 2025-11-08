@@ -1,4 +1,4 @@
-// src/components/organisms/AppFooter.tsx
+
 export default function AppFooter() {
   const year = new Date().getFullYear();
 

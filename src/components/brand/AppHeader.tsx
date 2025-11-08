@@ -17,7 +17,6 @@ export default function AppHeader() {
   const user = useSelector((s: RootState) => s.auth.user);
   const pathname = usePathname();
 
-  // ⚙️ Estado reactivo al pathname
   const [isProfile, setIsProfile] = useState(false);
 
   useEffect(() => {
