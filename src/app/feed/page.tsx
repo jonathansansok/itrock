@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import ClientComposer from "./ClientComposer";
 import FeedListClient from "./FeedListClient";
-import AppHeader from "@/components/brand/AppHeader";
+import AppHeader from "@/components/organisms/AppHeader";
 import StoriesBar from "@/components/molecules/StoriesBar";
 import { getInitialPosts } from "@/lib/server/getInitialPosts";
 import FeedHydrator from "@/components/providers/FeedHydrator";
