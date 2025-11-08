@@ -1,16 +1,23 @@
 "use client";
 
+import Link from "next/link";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store";
 import InstagramGlyph from "@/components/brand/InstagramGlyph";
 import InstagramWordmark from "@/components/brand/InstagramWordmark";
 import InstaSansoWordmark from "@/components/brand/InstaSansoWordmark";
 import LogoutButton from "@/components/molecules/LogoutButton";
+import Avatar from "@/components/atoms/Avatar";
 
 export default function AppHeader() {
+  const isAuth = useSelector((s: RootState) => s.auth.isAuthenticated);
+  const user = useSelector((s: RootState) => s.auth.user);
+
   return (
     <header
       className={[
         "sticky top-0 z-40 backdrop-blur bg-black/80 supports-backdrop-filter:bg-black/50",
-        "border-b border-neutral-900"
+        "border-b border-neutral-900",
       ].join(" ")}
       role="banner"
     >
@@ -18,14 +25,12 @@ export default function AppHeader() {
         <div className="flex items-center gap-2">
           <InstagramGlyph size={28} yOffset={-1} />
           <InstagramWordmark width={100} />
-
           <span
             className="mx-1 text-xs text-neutral-500 align-middle hidden md:inline-block"
             style={{ transform: "translateY(2px)" }}
           >
             by
           </span>
-
           <InstaSansoWordmark
             width={96}
             fontSize={22}
@@ -40,6 +45,18 @@ export default function AppHeader() {
               className="w-40 bg-transparent text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none"
             />
           </div>
+
+          {isAuth && user?.id && (
+            <Link
+              href={`/u/${encodeURIComponent(user.id)}`}
+              aria-label="Ir a mi perfil"
+              title={user.name || user.email || "Mi perfil"}
+              className="inline-flex items-center justify-center rounded-full border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 transition p-0.5"
+            >
+              <Avatar name={user.name || user.email || "Yo"} size={28} />
+            </Link>
+          )}
+
           <LogoutButton />
         </div>
       </div>

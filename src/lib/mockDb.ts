@@ -14,5 +14,7 @@ export const posts: Post[] = [
     comments: [
       { id: "c1", postId: "p1", userId: "u2", text: "Bien!", createdAt: new Date().toISOString() },
     ],
+    savedBy: [],       
+    shareCount: 0,     
   },
 ];

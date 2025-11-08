@@ -32,4 +32,7 @@ export interface Post {
   createdAt: string;
   comments: Comment[];
   authorName?: string;
+  savedBy?: string[];     
+  shareCount?: number;   
+
 }

@@ -7,7 +7,12 @@ import {
   toggleLike,
   addComment,
   removeComment,
+  toggleSave,
+  registerShare,
 } from "@/store/slices/feedSlice";
+import BookmarkButton from "@/components/atoms/BookmarkButton";
+import ShareButton from "@/components/atoms/ShareButton";
+import { shareOrCopy } from "@/lib/share";
 import { useState } from "react";
 import HeartButton from "@/components/atoms/HeartButton";
 
@@ -36,7 +41,22 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   const canComment = isAuth && !!currentUser?.id;
+  const saved = (post.savedBy ?? []).includes(currentUser?.id ?? "");
 
+  const onToggleSave = () => {
+    if (!isAuth || !currentUser?.id) return;
+    d(toggleSave({ postId: post.id, userId: currentUser.id }));
+  };
+
+  const onShare = async () => {
+    const url = `${window.location.origin}/post/${post.id}`;
+    const ok = await shareOrCopy(
+      url,
+      "Publicación",
+      post.content?.slice(0, 120)
+    );
+    if (ok) d(registerShare({ postId: post.id }));
+  };
   return (
     <article className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4">
       <header className="mb-3 flex items-center justify-between">
@@ -79,6 +99,8 @@ export default function PostCard({ post }: { post: Post }) {
           count={post.likes}
           onToggle={() => d(toggleLike({ postId: post.id }))}
         />
+        <ShareButton count={post.shareCount ?? 0} shareAction={onShare} />
+        <BookmarkButton saved={saved} toggleAction={onToggleSave} />
       </div>
 
       <div className="mt-3">
