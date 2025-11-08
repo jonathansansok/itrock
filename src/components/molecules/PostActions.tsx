@@ -15,7 +15,7 @@ type Props = {
   saved: boolean;
   toggleSaveAction: () => void;
 
-  showBookmark?: boolean; // para ocultarlo si ya lo mostraste debajo de la imagen
+  showBookmark?: boolean;
 };
 
 export default function PostActions({

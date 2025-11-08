@@ -4,7 +4,7 @@ type ShareNavigator = Navigator & { share?: (data: SharePayload) => Promise<void
 
 function isMobileUA() {
   if (typeof navigator === "undefined") return false;
-  const ua = navigator.userAgent || navigator.vendor;
+  const ua = (navigator.userAgent || "").toLowerCase();
   return /android|iphone|ipad|ipod|windows phone/i.test(ua);
 }
 
@@ -13,32 +13,34 @@ export async function shareSmart(
   title?: string,
   text?: string
 ): Promise<boolean> {
+  const message = [text || "", url].filter(Boolean).join(" ");
+  const encodedMsg = encodeURIComponent(message);
+
+  // 1️⃣ Intentar Web Share API
   try {
-    if (typeof navigator !== "undefined") {
-      const nav = navigator as ShareNavigator;
-      if (typeof nav.share === "function") {
-        await nav.share({ url, title, text });
-        return true;
-      }
+    const nav = navigator as ShareNavigator;
+    if (typeof nav.share === "function") {
+      await nav.share({ url, title, text });
+      return true;
     }
   } catch {
-    // fallback
+    // sigue a fallback
   }
 
-  // WhatsApp en móviles
-  if (isMobileUA()) {
-    const msg = encodeURIComponent([text || "", url].filter(Boolean).join(" "));
-    const wa = `https://wa.me/?text=${msg}`;
-    window.open(wa, "_blank", "noopener,noreferrer");
-    return true;
-  }
+  // 2️⃣ Detectar móvil o desktop
+  const waUrl = isMobileUA()
+    ? `https://wa.me/?text=${encodedMsg}`
+    : `https://web.whatsapp.com/send?text=${encodedMsg}`;
 
-  // Fallback: copiar al portapapeles
+  // 3️⃣ En desktop forzar apertura fuera del sandbox
   try {
-    await navigator.clipboard.writeText(url);
-    alert("Enlace copiado al portapapeles");
-    return true;
+    const w = window.open(waUrl, "_blank", "noopener,noreferrer,width=700,height=800");
+    if (w && !w.closed) return true;
   } catch {
-    return false;
+    // si bloquea popup, seguimos
   }
+
+  // 4️⃣ Alternativa: abrir mediante redirección (garantizado)
+  window.location.href = waUrl;
+  return true;
 }

@@ -8,10 +8,13 @@ import InstagramWordmark from "@/components/brand/InstagramWordmark";
 import InstaSansoWordmark from "@/components/brand/InstaSansoWordmark";
 import LogoutButton from "@/components/molecules/LogoutButton";
 import Avatar from "@/components/atoms/Avatar";
+import { Home } from "lucide-react"; // 👈 nuevo icono
 
 export default function AppHeader() {
   const isAuth = useSelector((s: RootState) => s.auth.isAuthenticated);
   const user = useSelector((s: RootState) => s.auth.user);
+
+  const isProfile = typeof window !== "undefined" && window.location.pathname.startsWith("/u/");
 
   return (
     <header
@@ -26,7 +29,7 @@ export default function AppHeader() {
           <InstagramGlyph size={28} yOffset={-1} />
           <InstagramWordmark width={100} />
           <span
-            className="mx-1 hidden md:inline-block align-middle text-xs text-neutral-500"
+            className="mx-1 text-xs text-neutral-500 align-middle hidden md:inline-block"
             style={{ transform: "translateY(2px)" }}
           >
             by
@@ -38,23 +41,36 @@ export default function AppHeader() {
           />
         </div>
 
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-3">
           {isAuth && user?.id && (
-            <Link
-              href={`/u/${encodeURIComponent(user.id)}`}
-              aria-label="Ir a mi perfil"
-              title={user.name || user.email || "Mi perfil"}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/60 px-2.5 py-1.5
-                         hover:bg-neutral-800 active:scale-95 transition"
-            >
-              <Avatar name={user.name || user.email || "Yo"} size={24} />
-              <span className="hidden sm:inline text-sm text-neutral-200">Perfil</span>
-            </Link>
+            <>
+              {/* 👇 En mobile muestra la casita si está en perfil */}
+              {isProfile ? (
+                <Link
+                  href="/feed"
+                  aria-label="Volver al feed"
+                  title="Feed"
+                  className="sm:hidden inline-flex items-center justify-center rounded-full border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 transition p-1.5"
+                >
+                  <Home size={22} className="text-neutral-300" />
+                </Link>
+              ) : (
+                <Link
+                  href={`/u/${encodeURIComponent(user.id)}`}
+                  aria-label="Ir a mi perfil"
+                  title={user.name || user.email || "Mi perfil"}
+                  className="inline-flex items-center justify-center rounded-full border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 transition p-0.5"
+                >
+                  <Avatar
+                    name={user.name || user.email || "Yo"}
+                    size={28}
+                  />
+                </Link>
+              )}
+            </>
           )}
 
-          <div className="ml-2">
-            <LogoutButton />
-          </div>
+          <LogoutButton />
         </div>
       </div>
     </header>
