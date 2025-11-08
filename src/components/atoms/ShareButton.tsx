@@ -2,7 +2,7 @@
 
 type Props = {
   count?: number;
-  shareAction: () => void;   // antes: onShare
+  shareAction: () => void; 
 };
 
 export default function ShareButton({ count = 0, shareAction }: Props) {

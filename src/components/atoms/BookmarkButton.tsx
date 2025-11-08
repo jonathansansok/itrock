@@ -2,7 +2,7 @@
 
 type Props = {
   saved: boolean;
-  toggleAction: () => void;   // antes: onToggle
+  toggleAction: () => void;  
   ariaLabelOn?: string;
   ariaLabelOff?: string;
 };
