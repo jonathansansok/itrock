@@ -3,7 +3,7 @@
 type Props = {
   ariaLabel: string;
   pressed?: boolean;
-  clickAction: () => void;
+  onClickAction: () => void;  
   className?: string;
   children: React.ReactNode;
 };
@@ -11,14 +11,14 @@ type Props = {
 export default function IconButton({
   ariaLabel,
   pressed,
-  clickAction,
+  onClickAction,
   className = "",
   children,
 }: Props) {
   return (
     <button
       type="button"
-      onClick={clickAction}
+      onClick={onClickAction}
       aria-label={ariaLabel}
       aria-pressed={pressed}
       className={[

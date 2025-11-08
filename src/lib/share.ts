@@ -1,46 +1,66 @@
-// src/lib/share.ts
 type SharePayload = { title?: string; text?: string; url?: string };
 type ShareNavigator = Navigator & { share?: (data: SharePayload) => Promise<void> };
 
 function isMobileUA() {
   if (typeof navigator === "undefined") return false;
-  const ua = (navigator.userAgent || "").toLowerCase();
+  const ua =
+    typeof (navigator as Navigator & { vendor?: string }).vendor === "string"
+      ? `${navigator.userAgent} ${(navigator as Navigator & { vendor?: string }).vendor}`
+      : navigator.userAgent;
   return /android|iphone|ipad|ipod|windows phone/i.test(ua);
 }
 
-export async function shareSmart(
-  url: string,
-  title?: string,
-  text?: string
-): Promise<boolean> {
-  const message = [text || "", url].filter(Boolean).join(" ");
-  const encodedMsg = encodeURIComponent(message);
+function openPopup(url: string) {
+  // Intentá abrir en una ventana nueva; si el bloqueador lo impide, cae a la pestaña actual
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) window.location.href = url;
+  return true;
+}
 
-  // 1️⃣ Intentar Web Share API
+export async function shareSmart(url: string, title?: string, text?: string): Promise<boolean> {
+  // 1) Web Share API (si existe)
   try {
-    const nav = navigator as ShareNavigator;
-    if (typeof nav.share === "function") {
-      await nav.share({ url, title, text });
-      return true;
+    if (typeof navigator !== "undefined") {
+      const nav = navigator as ShareNavigator;
+      if (typeof nav.share === "function") {
+        await nav.share({ url, title, text });
+        return true;
+      }
     }
   } catch {
-    // sigue a fallback
+    // seguimos con fallbacks
   }
 
-  // 2️⃣ Detectar móvil o desktop
-  const waUrl = isMobileUA()
-    ? `https://wa.me/?text=${encodedMsg}`
-    : `https://web.whatsapp.com/send?text=${encodedMsg}`;
+  const message = [text || "", url].filter(Boolean).join(" ").trim();
+  const waEncoded = encodeURIComponent(message);
 
-  // 3️⃣ En desktop forzar apertura fuera del sandbox
+  // 2) Móvil → WhatsApp app
+  if (isMobileUA()) {
+    return openPopup(`https://wa.me/?text=${waEncoded}`);
+  }
+
+  // 3) Desktop → WhatsApp Web
+  // Nota: web.whatsapp.com funciona bien en desktop moderno con sesión iniciada
+  if (typeof window !== "undefined") {
+    return openPopup(`https://web.whatsapp.com/send?text=${waEncoded}`);
+  }
+
+  // 4) Fallback: copiar al portapapeles + toast
   try {
-    const w = window.open(waUrl, "_blank", "noopener,noreferrer,width=700,height=800");
-    if (w && !w.closed) return true;
+    await navigator.clipboard.writeText(url);
+    const Swal = (await import("sweetalert2")).default;
+    await Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Enlace copiado al portapapeles",
+      showConfirmButton: false,
+      timer: 1800,
+      background: "#0a0a0a",
+      color: "#e5e5e5",
+    });
+    return true;
   } catch {
-    // si bloquea popup, seguimos
+    return false;
   }
-
-  // 4️⃣ Alternativa: abrir mediante redirección (garantizado)
-  window.location.href = waUrl;
-  return true;
 }

@@ -42,7 +42,8 @@ export default function ProfileClient({
 
   return (
     <div className="mx-auto w-full max-w-[680px] px-3 sm:px-4 py-4">
-      <ProfileTabs value={tab} changeAction={setTab} />
+     <ProfileTabs value={tab} onChangeAction={setTab} />
+
 
       {tab === "pubs" &&
         (publications.length ? (

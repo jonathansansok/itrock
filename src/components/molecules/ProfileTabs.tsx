@@ -1,13 +1,14 @@
+// social-basic/src/components/molecules/ProfileTabs.tsx
 "use client";
 
 type Tab = "pubs" | "coms" | "saved";
 
 export default function ProfileTabs({
   value,
-  changeAction,
+  onChangeAction,
 }: {
   value: Tab;
-  changeAction: (t: Tab) => void;
+  onChangeAction: (t: Tab) => void;
 }) {
   const base =
     "flex-1 min-w-[100px] rounded-full px-4 py-2 text-sm sm:flex-none";
@@ -17,19 +18,19 @@ export default function ProfileTabs({
   return (
     <div className="mb-4 flex flex-wrap justify-center gap-2 sm:gap-3">
       <button
-        onClick={() => changeAction("pubs")}
+        onClick={() => onChangeAction("pubs")}
         className={`${base} ${value === "pubs" ? active : inactive}`}
       >
         Publicaciones
       </button>
       <button
-        onClick={() => changeAction("coms")}
+        onClick={() => onChangeAction("coms")}
         className={`${base} ${value === "coms" ? active : inactive}`}
       >
         Comentarios
       </button>
       <button
-        onClick={() => changeAction("saved")}
+        onClick={() => onChangeAction("saved")}
         className={`${base} ${value === "saved" ? active : inactive}`}
       >
         Guardados

@@ -1,10 +1,7 @@
+//social-basic\src\components\atoms\HeartButton.tsx
 "use client";
 
-type Props = {
-  liked: boolean;
-  count: number;
-  toggleAction: () => void;
-};
+type Props = { liked: boolean; count: number; toggleAction: () => void };
 
 export default function HeartButton({ liked, count, toggleAction }: Props) {
   return (
