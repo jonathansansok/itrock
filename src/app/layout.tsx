@@ -14,11 +14,7 @@ export const metadata: Metadata = {
   title: "Instagram by J. Sansó",
   description: "Challenge IT-ROCK",
   icons: {
-    icon: [
-      { url: "/favicon.ico", type: "image/x-icon" },
-      { url: "/icons/instagram-192.png", sizes: "192x192", type: "image/png" },
-    ],
-    apple: "/icons/instagram-180.png",
+    icon: "/favicon.ico", 
   },
 };
 export const viewport: Viewport = { themeColor: "#000000" };
