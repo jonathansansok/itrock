@@ -2,7 +2,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import type { Post } from "@/interfaces";
-import { addComment, removeComment, toggleLike, toggleSave } from "@/store/slices/feedSlice";
+import {
+  addComment,
+  removeComment,
+  toggleLike,
+  toggleSave,
+} from "@/store/slices/feedSlice";
 import PostHeader from "@/components/molecules/postcard/PostHeader";
 import PostMedia from "@/components/molecules/postcard/PostMedia";
 import PostActions from "@/components/molecules/PostActions";
@@ -33,21 +38,27 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <article id={`post-${post.id}`} className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4 scroll-mt-20">
+    <article
+      id={`post-${post.id}`}
+      className="rounded-2xl bg-black/50 backdrop-blur-sm p-3 sm:p-4 scroll-mt-20"
+    >
       <PostHeader authorLabel={author} userId={post.userId} />
 
       {post.imageUrl && (
         <PostMedia
           imageUrl={post.imageUrl}
           alt={post.content ? post.content.slice(0, 120) : ""}
+          imageW={post.imageW}
+          imageH={post.imageH}
           showBookmark
           saved={saved}
           toggleSaveAction={toggleSaveAction}
         />
       )}
-
       {post.content && (
-        <p className="mt-2 whitespace-pre-wrap text-[15px] leading-6 text-neutral-100">{post.content}</p>
+        <p className="mt-2 whitespace-pre-wrap text-[15px] leading-6 text-neutral-100">
+          {post.content}
+        </p>
       )}
 
       <div className="mt-1 text-xs text-neutral-400">

@@ -27,6 +27,8 @@ export interface Post {
   userId: string;
   content: string;
   imageUrl?: string;
+  imageW?: number;   
+  imageH?: number;  
   likes: number;
   likedByMe?: boolean;
   createdAt: string;

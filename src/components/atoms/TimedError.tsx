@@ -1,4 +1,3 @@
-// src/components/atoms/TimedError.tsx
 "use client";
 import { useEffect, useState } from "react";
 
